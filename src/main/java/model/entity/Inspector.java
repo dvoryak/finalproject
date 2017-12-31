@@ -1,45 +1,33 @@
 package model.entity;
 
-public class Inspector {
-    private int id;
-    private String fistName;
-    private String lastName;
+public class Inspector extends Entity {
+    private String email;
     private String login;
     private String password;
 
     public Inspector() {
     }
 
-    public Inspector(int id, String fistName, String lastName, String login, String password) {
-        this.id = id;
-        this.fistName = fistName;
-        this.lastName = lastName;
+    public Inspector(int id, String email, String login, String password) {
+        super(id);
+        this.email = email;
         this.login = login;
         this.password = password;
     }
 
-    public int getId() {
-        return id;
+    private Inspector(Builder builder) {
+        super.setId(builder.id);
+        this.email = builder.email;
+        this.login = builder.login;
+        this.password = builder.password;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getEmail() {
+        return email;
     }
 
-    public String getFistName() {
-        return fistName;
-    }
-
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLogin() {
@@ -56,5 +44,39 @@ public class Inspector {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static class Builder {
+        private int id;
+        private String email;
+        private String login;
+        private String password;
+
+        public Builder() {
+        }
+
+        public Builder id(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder login(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Inspector build() {
+            return new Inspector(this);
+        }
     }
 }

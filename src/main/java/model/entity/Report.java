@@ -1,23 +1,14 @@
 package model.entity;
 
-public abstract class Report {
-    private int id;
+public abstract class Report extends Entity {
     private int userId;
     private int inspectorId;
-    private ReportStatus status = ReportStatus.UNCHECKED;
+
 
     public Report(int id, int userId, int inspectorId) {
-        this.id = id;
+        super.setId(id);
         this.userId = userId;
         this.inspectorId = inspectorId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getUserId() {
@@ -36,12 +27,5 @@ public abstract class Report {
         this.inspectorId = inspectorId;
     }
 
-    public ReportStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ReportStatus status) {
-        this.status = status;
-    }
 
 }
