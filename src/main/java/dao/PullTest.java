@@ -14,9 +14,6 @@ public class PullTest {
 
 
     public PullTest() throws SQLException {
-    }
-
-    public String getUserName() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * from project.user");
         String out = null;
@@ -24,10 +21,14 @@ public class PullTest {
             out = resultSet.getString("firstName");
 
         }
-        return out;
+    }
+
+    public String getUserName() throws SQLException {
+        return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
 }

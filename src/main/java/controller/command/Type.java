@@ -6,5 +6,6 @@ public enum Type {
     LOGOUT,
     CLIENT_CABINET,
     INSPECTOR_CABINET,
-    ACCESS_DENIED
+    ACCESS_DENIED,
+    LANGUAGE_CHANGE
 }

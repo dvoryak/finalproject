@@ -1,5 +1,8 @@
 package controller;
 
+import controller.command.CommandExecutor;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +13,27 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/")
 public class Controller extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-        processRequest();
+        processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-        processRequest();
+        processRequest(req, resp);
     }
 
-    private void processRequest() {
-
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println("servlet");
+        String execute = CommandExecutor.INSTANCE.execute(req, resp);
+        try {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
+            requestDispatcher.forward(req,resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
