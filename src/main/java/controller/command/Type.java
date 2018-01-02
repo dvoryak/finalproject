@@ -1,8 +1,8 @@
 package controller.command;
 
 public enum Type {
-    LOGIN,
-    REGISTER,
+    LOGIN_PAGE,
+    REGISTER_PAGE,
     LOGOUT,
     CLIENT_CABINET,
     INSPECTOR_CABINET,

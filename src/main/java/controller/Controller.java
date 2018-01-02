@@ -25,8 +25,7 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-        System.out.println("servlet");
-        String execute = CommandExecutor.INSTANCE.execute(req, resp);
+        String execute = CommandExecutor.INSTANCE.execute(req,resp);
         try {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
             requestDispatcher.forward(req,resp);
