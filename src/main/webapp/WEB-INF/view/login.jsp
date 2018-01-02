@@ -52,14 +52,14 @@
     <div class="row">
         <div class="col-md-offset-5 col-md-3">
             <div class="form-login">
-                <h4>Welcome back.</h4>
+                <h4><fmt:message key="welcome" bundle="${bundle}" /></h4>
                 <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="<fmt:message key="user.login" bundle="${bundle}"/>" />
                 </br>
                 <input type="text" id="userPassword" class="form-control input-sm chat-input" placeholder="<fmt:message key="user.password" bundle="${bundle}"/>" />
                 </br>
                 <div class="wrapper">
             <span class="group-btn">
-                <a href="#" class="btn btn-primary btn-md">login <i class="fa fa-sign-in"></i></a>
+                <a href="#" class="btn btn-primary btn-md"><fmt:message key="front.logIn" bundle="${bundle}" /> <i class="fa fa-sign-in"></i></a>
             </span>
                 </div>
             </div>
