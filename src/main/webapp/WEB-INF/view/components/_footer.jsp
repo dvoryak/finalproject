@@ -25,9 +25,9 @@
 <div class="container">
     <div class="navbar navbar-default navbar-fixed-bottom">
         <ul class="my-footer">
-            <li><a href="/?command=LANGUAGE_CHANGE&lang=en" > English </a></li>
-            <li><a href="/?command=LANGUAGE_CHANGE&lang=ua" > Українська </a></li>
-            <li><a href="/?command=LANGUAGE_CHANGE&lang=ru" > Русский </a></li>
+            <li><a href="/${page}?command=LANGUAGE_CHANGE&lang=en&page=${page}" > English </a></li>
+            <li><a href="/${page}?command=LANGUAGE_CHANGE&lang=ua&page=${page}" > Українська </a></li>
+            <li><a href="/${page}?command=LANGUAGE_CHANGE&lang=ru&page=${page}" > Русский </a></li>
         </ul>
     </div>
 </div>

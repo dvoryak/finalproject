@@ -1,12 +1,13 @@
 package controller.command;
 
+import controller.constant.Pages;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginCommand implements Command {
-
+public class LoginInspectorCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return null;
+        return Pages.INSPECTOR_CABINET;
     }
 }

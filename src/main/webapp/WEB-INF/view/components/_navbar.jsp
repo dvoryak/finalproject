@@ -36,11 +36,11 @@ a{
         <div class="col-sm-11 col-md-11 col-lg-11">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#home" >Home</a></li>
-                <li><a href="/?command=login_page" ><fmt:message key="front.logIn" bundle="${bundle}"/></a></li>
-                <li><a href="/?command=register_page"><fmt:message key="front.register" bundle="${bundle}"/></a></li>
+                <li><a href="/login?command=login_page" ><fmt:message key="front.logIn" bundle="${bundle}"/></a></li>
+                <li><a href="/register?command=register_page"><fmt:message key="front.register" bundle="${bundle}"/></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" >
-                <li><a href="/?command=logout"><fmt:message key="front.logOut" bundle="${bundle}"/></a></li>
+                <li><a href="/logout?command=logout"><fmt:message key="front.logOut" bundle="${bundle}"/></a></li>
             </ul>
         </div>
     </div>
