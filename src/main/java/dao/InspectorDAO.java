@@ -1,7 +1,12 @@
 package dao;
 
+
 import model.entity.Inspector;
 
-public interface InspectorDAO extends BasicCrudOperation<Integer,Inspector> {
+import java.util.List;
+
+public interface InspectorDAO {
+
+    List<Inspector> findAll();
 
 }

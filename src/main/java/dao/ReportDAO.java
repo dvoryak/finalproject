@@ -1,6 +1,14 @@
 package dao;
 
-import model.entity.Report;
+import model.entity.AbstractReport;
 
-public interface ReportDAO extends BasicCrudOperation<Integer,Report> {
+import java.util.List;
+
+public interface ReportDAO {
+
+    boolean add(ReportDAO reportDAO);
+
+    List<AbstractReport> findAll();
+
+
 }

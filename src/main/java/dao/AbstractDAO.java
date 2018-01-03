@@ -6,9 +6,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class AbstractDAO<K, E extends Entity> implements BasicCrudOperation<K,E> {
+public abstract class AbstractDAO {
 
-    private Connection connection;
+    protected Connection connection;
 
     public AbstractDAO(Connection connection) {
         this.connection = connection;

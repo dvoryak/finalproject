@@ -1,9 +1,12 @@
 package model.entity;
 
-public class Inspector extends Entity {
+public class Inspector extends User{
+
     private String email;
-    private String login;
-    private String password;
+
+    {
+        role = Role.INSPECTOR;
+    }
 
     public Inspector() {
     }
@@ -78,5 +81,14 @@ public class Inspector extends Entity {
         public Inspector build() {
             return new Inspector(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Inspector{" +
+                "email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
