@@ -5,9 +5,10 @@ import controller.constant.Pages;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginInspectorCommand implements Command {
+public class PageAboutUsCommand implements Command {
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return Pages.INSPECTOR_CABINET;
+        return Pages.ABOUT_US;
     }
 }

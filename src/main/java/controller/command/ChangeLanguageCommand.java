@@ -19,13 +19,9 @@ public class ChangeLanguageCommand implements Command {
         } else {
             response.addCookie(new Cookie("lang", lang));
         }
-        String page = (String) request.getParameter("page");
 
-        if(getUrl(page) != null) {
-            return getUrl(page);
-        }
 
-        return Pages.LOGIN;
+        return Pages.ABOUT_US;
     }
 
     private Cookie getCookie(HttpServletRequest request) {

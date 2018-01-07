@@ -8,6 +8,7 @@ public enum Type {
     INSPECTOR_CABINET,
     ACCESS_DENIED,
     LANGUAGE_CHANGE,
-    LOGIN_CLIENT,
-    LOGIN_INSPECTOR
+    LOGIN,
+    REGISTER,
+    ABOUT_US
 }
