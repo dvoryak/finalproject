@@ -42,7 +42,6 @@
 <%@include file="components/_i18n.jsp"%>
 <%@include file="components/_navbar.jsp" %>
 
-<c:set value="register" var="page" scope="request"/>
 
 <div class="container form-register wrapper" >
     <form action="/" method="post">
@@ -74,13 +73,13 @@
             <div class="input-group input-group-lg">
                 <span class="input-group-addon" ><fmt:message key="client.email" bundle="${bundle}"/></span>
                 <input type="text" name="email" class="form-control"
-                       placeholder="<fmt:message key="client.phone.hint" bundle="${bundle}"/>"/>
+                       placeholder="<fmt:message key="client.email.hint" bundle="${bundle}"/>"/>
             </div>
             <br>
             <div class="input-group input-group-lg">
                 <span class="input-group-addon"><fmt:message key="client.phone" bundle="${bundle}"/></span>
                 <input type="text" name="phone" class="form-control"
-                       placeholder="<fmt:message key="client.email.hint" bundle="${bundle}"/>"/>
+                       placeholder="<fmt:message key="client.phone.hint" bundle="${bundle}"/>"/>
             </div>
             <br>
 

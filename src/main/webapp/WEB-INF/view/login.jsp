@@ -47,8 +47,6 @@
 
 <%@include file="components/_navbar.jsp" %>
 
-<c:set value="login" var="page" scope="request"/>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-offset-5 col-md-3">
@@ -58,12 +56,12 @@
                     <input type="text" name="login" class="form-control input-sm chat-input"
                            placeholder="<fmt:message key="client.login" bundle="${bundle}"/>"/>
                     </br>
-                    <input type="text" name="password" class="form-control input-sm chat-input"
+                    <input type="password" name="password" class="form-control input-sm chat-input"
                            placeholder="<fmt:message key="client.password" bundle="${bundle}"/>"/>
                     </br>
                     <div class="wrapper">
-                        I'm an inspector <input type="checkbox" name="command" value="login_inspector"/><br>
-                        <input name="command" value="login_client" type="hidden">
+                        I'm an inspector <input type="checkbox" name="isInspector" value="true"/><br>
+                        <input name="command" value="login" type="hidden">
                         <span class="group-btn">
                              <button type="submit" class="btn btn-success"><fmt:message key="front.logIn" bundle="${bundle}"/></button>
                         </span>

@@ -27,5 +27,5 @@
 
     <link rel="stylesheet" href="../style.css">
 
-    <title>Hello, world!</title>
+    <title></title>
 </head>
