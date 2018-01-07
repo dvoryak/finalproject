@@ -1,6 +1,6 @@
 package model.entity;
 
-public class Payer extends Entity {
+public class ReportPayer extends Entity {
 
     private String firstName;
     private String middleName;
@@ -8,11 +8,17 @@ public class Payer extends Entity {
     private String passportCode;
     private String postalCode;
     private String phone;
+    private String city;
+    private String street;
+    private String home;
+    private Report report;
 
-    public Payer() {
+
+    public ReportPayer() {
     }
 
-    public Payer(int id, String firstName, String middleName, String lastName, String passportCode, String postalCode, String phone) {
+    public ReportPayer(int id, String firstName, String middleName, String lastName, String passportCode, String postalCode,
+                       String phone, String city, String street, String home, Report report) {
         super(id);
         this.firstName = firstName;
         this.middleName = middleName;
@@ -20,9 +26,12 @@ public class Payer extends Entity {
         this.passportCode = passportCode;
         this.postalCode = postalCode;
         this.phone = phone;
+        this.city = city;
+        this.street = street;
+        this.home = home;
     }
 
-    public Payer(Builder builder) {
+    public ReportPayer(Builder builder) {
         super(builder.id);
         this.firstName = builder.firstName;
         this.middleName = builder.middleName;
@@ -30,6 +39,34 @@ public class Payer extends Entity {
         this.passportCode = builder.passportCode;
         this.postalCode = builder.postalCode;
         this.phone = builder.phone;
+        this.city = builder.city;
+        this.street = builder.street;
+        this.home = builder.home;
+        this.report = report;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
     }
 
     public String getFirstName() {
@@ -80,6 +117,14 @@ public class Payer extends Entity {
         this.phone = phone;
     }
 
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
+    }
+
     private static class Builder {
         private int id;
         private String firstName;
@@ -88,9 +133,19 @@ public class Payer extends Entity {
         private String passportCode;
         private String postalCode;
         private String phone;
+        private String city;
+        private String street;
+        private String home;
+        private Report report;
+
 
         public Builder id(int id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder report(Report report) {
+            this.report = report;
             return this;
         }
 
@@ -124,14 +179,29 @@ public class Payer extends Entity {
             return this;
         }
 
-        public Payer build() {
-            return new Payer(this);
+        public Builder city(String city) {
+            this.city = city;
+            return this;
+        }
+
+        public Builder street(String street) {
+            this.street = street;
+            return this;
+        }
+
+        public Builder home(String home) {
+            this.home = home;
+            return this;
+        }
+
+        public ReportPayer build() {
+            return new ReportPayer(this);
         }
     }
 
     @Override
     public String toString() {
-        return "Payer{" +
+        return "ReportPayer{" +
                 "firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +

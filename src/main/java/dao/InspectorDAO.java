@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface InspectorDAO {
 
+    Inspector findByLogin(String login);
+
     List<Inspector> findAll();
 
 }

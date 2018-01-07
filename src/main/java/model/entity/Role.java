@@ -1,6 +1,6 @@
 package model.entity;
 
 public enum Role {
-    USER,
+    CLIENT,
     INSPECTOR
 }

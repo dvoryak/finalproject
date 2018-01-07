@@ -7,9 +7,8 @@ import java.util.List;
 
 public interface ClientDAO {
 
-    Client findById(long id);
-
-    List<Client> findAll();
+    Client findByLogin(String login);
 
     boolean add(Client client);
+
 }

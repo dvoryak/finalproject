@@ -1,34 +1,28 @@
 package service.impl;
 
+import dao.ClientDAO;
+import dao.mysqlDaoImpl.MysqlDaoFactory;
+import dao.pool.ConnectionPool;
 import model.entity.Client;
 import service.ClientService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Connection;
 
 public class ClientServiceImpl implements ClientService {
 
-    private ArrayList<Client> clients = new ArrayList<>();
+    private ClientDAO clientDAO;
 
-    {
-        clients.add(new Client.Builder().login("admin").password("admin").build());
+    public ClientServiceImpl(ClientDAO clientDAO) {
+        this.clientDAO = clientDAO;
     }
 
+    @Override
     public Client findByLogin(String login) {
-        for (Client client : clients) {
-            if(client.getLogin().equals(login)) {
-                return client;
-            }
-        }
-        return null;
+        return clientDAO.findByLogin(login);
     }
 
-    public List<Client> findAll() {
-        return clients;
-    }
-
+    @Override
     public boolean add(Client client) {
-        return clients.add(client);
+        return clientDAO.add(client);
     }
 }

@@ -19,11 +19,14 @@ public enum ConnectionPool {
         }
     }
 
-    private ConnectionPool() {
-    }
-
-    public Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
+    public Connection getConnection()  {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO add logger here
+        }
+        return null;
     }
 
 }

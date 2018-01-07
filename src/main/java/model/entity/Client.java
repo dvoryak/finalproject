@@ -1,27 +1,29 @@
 package model.entity;
 
+import java.util.Set;
+
 public class Client extends User {
 
     private String firstName;
     private String lastName;
     private String phone;
     private String email;
+    private Set<Report> reports;
 
     {
-        role = Role.USER;
+        role = Role.CLIENT;
     }
 
     public Client() {
     }
 
-    public Client(int id, String firstName, String lastName, String phone, String email, String login, String password) {
+    public Client(int id, String firstName, String lastName, String phone, String email, Set<Report> reports) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.login = login;
-        this.password = password;
+        this.reports = reports;
     }
 
     private Client(Builder builder) {
@@ -32,6 +34,15 @@ public class Client extends User {
         this.email = builder.email;
         this.login = builder.login;
         this.password = builder.password;
+        this.reports = builder.reports;
+    }
+
+    public Set<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(Set<Report> reports) {
+        this.reports = reports;
     }
 
     public String getFirstName() {
@@ -86,10 +97,11 @@ public class Client extends User {
         private int id;
         private String firstName;
         private String lastName;
-        private String phone;
-        private String email;
         private String login;
         private String password;
+        private String email;
+        private String phone;
+        private Set<Report> reports;
 
         public Builder() {
 
@@ -130,10 +142,17 @@ public class Client extends User {
             return this;
         }
 
+        public Builder reports(Set<Report> reports) {
+            this.reports = reports;
+            return this;
+        }
+
         public Client build() {
             return new Client(this);
         }
     }
+
+
 
     @Override
     public String toString() {

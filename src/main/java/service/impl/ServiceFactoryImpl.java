@@ -1,5 +1,8 @@
 package service.impl;
 
+import dao.factory.AbstractDAOFactory;
+import dao.mysqlDaoImpl.MysqlDaoFactory;
+import dao.pool.ConnectionPool;
 import service.AbstractServiceFactory;
 import service.InspectorService;
 import service.ReportService;
@@ -8,18 +11,19 @@ import service.ClientService;
 import java.sql.Connection;
 
 public class ServiceFactoryImpl extends AbstractServiceFactory {
+
     @Override
-    public InspectorService createInspectorService(Connection connection) {
+    public InspectorService createInspectorService() {
         return null;
     }
 
     @Override
-    public ClientService createUserService(Connection connection) {
-        return new ClientServiceImpl();
+    public ClientService createClientService() {
+        return new ClientServiceImpl(new MysqlDaoFactory().createClientDAO());
     }
 
     @Override
-    public ReportService createReportService(Connection connection) {
+    public ReportService createReportService() {
         return null;
     }
 }

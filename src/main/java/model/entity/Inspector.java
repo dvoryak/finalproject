@@ -1,8 +1,12 @@
 package model.entity;
 
-public class Inspector extends User{
+import java.util.Set;
+
+public class Inspector extends User {
 
     private String email;
+    private Set<Report> reports;
+
 
     {
         role = Role.INSPECTOR;
@@ -23,6 +27,15 @@ public class Inspector extends User{
         this.email = builder.email;
         this.login = builder.login;
         this.password = builder.password;
+        this.reports = builder.reports;
+    }
+
+    public Set<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(Set<Report> reports) {
+        this.reports = reports;
     }
 
     public String getEmail() {
@@ -54,6 +67,7 @@ public class Inspector extends User{
         private String email;
         private String login;
         private String password;
+        private Set<Report> reports;
 
         public Builder() {
         }
@@ -75,6 +89,11 @@ public class Inspector extends User{
 
         public Builder password(String password) {
             this.password = password;
+            return this;
+        }
+
+        public Builder reports(Set<Report> reports) {
+            this.reports = reports;
             return this;
         }
 
