@@ -25,7 +25,7 @@ public class RegisterCommand implements Command {
                 .email(request.getParameter("email"))
                 .phone(request.getParameter("phone"))
                 .build();
-        clientService.add(client);
+        clientService.save(client);
         return Pages.LOGIN;
     }
 }

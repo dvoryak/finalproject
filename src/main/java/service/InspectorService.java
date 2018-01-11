@@ -9,4 +9,7 @@ public interface InspectorService {
     Inspector findByLogin(String login);
 
     List<Inspector> findAll();
+
+    boolean save(Inspector inspector);
+
 }

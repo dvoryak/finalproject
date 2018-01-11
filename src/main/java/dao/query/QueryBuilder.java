@@ -60,6 +60,10 @@ public class QueryBuilder {
         return this;
     }
 
+    public void clear() {
+        stringBuilder = new StringBuilder();
+    }
+
 
     public String condition(String left,String right, String sign) {
         StringBuilder sb = new StringBuilder();
@@ -73,7 +77,7 @@ public class QueryBuilder {
 
 
 
-    public String toQuery() {
+    public String toString() {
         return stringBuilder.toString();
     }
 

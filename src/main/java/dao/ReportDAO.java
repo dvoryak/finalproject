@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ReportDAO {
 
-    boolean add(ReportDAO reportDAO);
+    boolean save(Report report);
 
     List<Report> findAll();
 
-    List<Report> findByUserId(long id);
+    List<Report> findByUserId(int id);
 
-    List<Report> findByInspectorId(long id);
+    Report findById(int id);
 }

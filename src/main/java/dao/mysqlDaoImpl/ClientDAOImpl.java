@@ -1,60 +1,74 @@
 package dao.mysqlDaoImpl;
 
-import dao.AbstractDAO;
 import dao.ClientDAO;
 import dao.pool.ConnectionPool;
-import dao.query.QueryBuilder;
 import model.entity.Client;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ClientDAOImpl implements ClientDAO {
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
-    private final String table = "project.client";
+    private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
 
-    @Override
-    public Client findByLogin(String login) {
-        Client client = null;
-        try (Connection connection = pool.getConnection();
-             Statement statement = connection.createStatement()) {
-            QueryBuilder query = new QueryBuilder();
-            query.selectAll()
-                    .from(table)
-                    .where(query.condition("login", login, "="));
-            ResultSet rs = statement.executeQuery(query.toQuery());
-            if(rs.next()) {
-                client = getEntity(rs);
-            }
-
-        } catch (SQLException e) {
-            //TODO add looger
-            e.printStackTrace();
-            return null;
-        }
-
-        return client;
+    public ClientDAOImpl() {
     }
 
     @Override
-    public boolean add(Client client) {
-        try (Connection connection = pool.getConnection();
-             Statement statement = connection.createStatement()) {
-            QueryBuilder query = new QueryBuilder();
-            query.insert()
-                    .into(table)
-                    .values(Integer.toString(client.getId()), client.getFirstName(), client.getLastName(), client.getLogin(),
-                            client.getPassword(), client.getEmail(), client.getPhone());
-            statement.execute(query.toQuery());
-            return true;
+    public Client findByLogin(String login) {
+        try(Connection connection = pool.getConnection();
+            Statement statement = connection.createStatement()) {
+            String q = bundle.getString("sql.client.findByLogin");
+            q = q.replace("?",login);
+            ResultSet resultSet = statement.executeQuery(q);
+            if (resultSet.next()) {
+                return getEntity(resultSet);
+            }
         } catch (SQLException e) {
-            //TODO add logger
             e.printStackTrace();
-            return false;
+            //TODO logger
         }
+        return null;
+    }
+
+    @Override
+    public List<Client> findAll() {
+        try(Connection connection = pool.getConnection();
+            Statement statement = connection.createStatement()) {
+            List<Client> clients = new ArrayList<>();
+            ResultSet resultSet = statement.executeQuery(bundle.getString("sql.client.findAll"));
+            while (resultSet.next()) {
+                clients.add(getEntity(resultSet));
+            }
+            return clients;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO logger
+        }
+        return null;
+    }
+
+    @Override
+    public boolean save(Client client) {
+        try(Connection connection = pool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.client.save"))) {
+            ps.setInt(1,client.hashCode());
+            ps.setString(2,client.getFirstName());
+            ps.setString(3,client.getLastName());
+            ps.setString(4,client.getLogin());
+            ps.setString(5,client.getPassword());
+            ps.setString(6,client.getEmail());
+            ps.setString(7,client.getPhone());
+            return ps.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO logger
+        }
+        return false;
     }
 
     private Client getEntity(ResultSet rs) throws SQLException {
@@ -65,6 +79,7 @@ public class ClientDAOImpl implements ClientDAO {
                 .login(rs.getString("login"))
                 .password(rs.getString("password"))
                 .email(rs.getString("email"))
-                .phone(rs.getString("phone")).build();
+                .phone(rs.getString("phone"))
+                .build();
     }
 }

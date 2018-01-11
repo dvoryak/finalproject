@@ -8,5 +8,7 @@ public interface ClientService {
 
     Client findByLogin(String login);
 
-    boolean add(Client client);
+    List<Client> findAll();
+
+    boolean save(Client client);
 }

@@ -7,25 +7,27 @@ import model.entity.Inspector;
 import model.entity.User;
 import service.ClientService;
 import service.InspectorService;
-import service.impl.ServiceFactoryImpl;
+import service.factory.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 public class LoginCommand implements Command {
 
-    private ClientService clientService;
-    private InspectorService inspectorService;
+    private ServiceFactory serviceFactory;
 
-    public LoginCommand(ClientService clientService, InspectorService inspectorService) {
-        this.clientService = clientService;
-        this.inspectorService = inspectorService;
+    public LoginCommand(ServiceFactory serviceFactory) {
+        this.serviceFactory = serviceFactory;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+
+        ClientService clientService = serviceFactory.createClientService();
+        InspectorService inspectorService = serviceFactory.createInspectorService();
 
         String isInspector = request.getParameter("isInspector");
 
@@ -39,7 +41,7 @@ public class LoginCommand implements Command {
         } else {
             Client client = clientService.findByLogin(login);
             if(checkUser(client,login,password)) {
-                request.getSession().setAttribute("user",client);
+                request.getSession().setAttribute("user", client);
                 return Pages.CLIENT_CABINET;
             }
         }
@@ -50,6 +52,5 @@ public class LoginCommand implements Command {
     private boolean checkUser(User user,String login, String password) {
         return user != null && user.getLogin().equals(login) && user.getPassword().equals(password);
     }
-
 
 }

@@ -26,13 +26,15 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
         String execute = CommandExecutor.INSTANCE.execute(req,resp);
-        try {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
-            requestDispatcher.forward(req,resp);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(execute != null) {
+            try {
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

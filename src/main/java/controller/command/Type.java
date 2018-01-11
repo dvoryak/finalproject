@@ -3,12 +3,20 @@ package controller.command;
 public enum Type {
     LOGIN_PAGE,
     REGISTER_PAGE,
+    REPORT_PAGE,
+    EDIT_PAGE,
+    VIEW_PAGE,
     LOGOUT,
     CLIENT_CABINET,
     INSPECTOR_CABINET,
     ACCESS_DENIED,
     LANGUAGE_CHANGE,
+    REPORT_VIEW,
+    REPORT_EDIT,
     LOGIN,
     REGISTER,
-    ABOUT_US
+    ABOUT_US,
+    AJAX,
+    CREATE_REPORT
+
 }

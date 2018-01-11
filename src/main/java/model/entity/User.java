@@ -1,20 +1,17 @@
 package model.entity;
 
-public abstract class User extends Entity {
-
-    Role role;
-    String login;
-    String password;
+public class User extends Entity {
+    private String login;
+    private String password;
+    private String role;
 
     public User() {
     }
 
-    public User(int id) {
+    public User(int id, String login, String password) {
         super(id);
-    }
-
-    public Role getRole() {
-        return role;
+        this.login = login;
+        this.password = password;
     }
 
     public String getLogin() {
@@ -31,5 +28,13 @@ public abstract class User extends Entity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

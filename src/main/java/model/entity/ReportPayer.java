@@ -5,25 +5,21 @@ public class ReportPayer extends Entity {
     private String firstName;
     private String middleName;
     private String lastName;
-    private String passportCode;
+    private String passport;
     private String postalCode;
     private String phone;
     private String city;
     private String street;
     private String home;
-    private Report report;
 
 
-    public ReportPayer() {
-    }
-
-    public ReportPayer(int id, String firstName, String middleName, String lastName, String passportCode, String postalCode,
-                       String phone, String city, String street, String home, Report report) {
+    public ReportPayer(int id, String firstName, String middleName, String lastName, String passport, String postalCode,
+                       String phone, String city, String street, String home) {
         super(id);
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.passportCode = passportCode;
+        this.passport = passport;
         this.postalCode = postalCode;
         this.phone = phone;
         this.city = city;
@@ -31,42 +27,17 @@ public class ReportPayer extends Entity {
         this.home = home;
     }
 
-    public ReportPayer(Builder builder) {
+    private ReportPayer(Builder builder) {
         super(builder.id);
         this.firstName = builder.firstName;
         this.middleName = builder.middleName;
         this.lastName = builder.lastName;
-        this.passportCode = builder.passportCode;
+        this.passport = builder.passportCode;
         this.postalCode = builder.postalCode;
         this.phone = builder.phone;
         this.city = builder.city;
         this.street = builder.street;
         this.home = builder.home;
-        this.report = report;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getHome() {
-        return home;
-    }
-
-    public void setHome(String home) {
-        this.home = home;
     }
 
     public String getFirstName() {
@@ -93,12 +64,12 @@ public class ReportPayer extends Entity {
         this.lastName = lastName;
     }
 
-    public String getPassportCode() {
-        return passportCode;
+    public String getPassport() {
+        return passport;
     }
 
-    public void setPassportCode(String passportCode) {
-        this.passportCode = passportCode;
+    public void setPassport(String passport) {
+        this.passport = passport;
     }
 
     public String getPostalCode() {
@@ -117,15 +88,32 @@ public class ReportPayer extends Entity {
         this.phone = phone;
     }
 
-    public Report getReport() {
-        return report;
+    public String getCity() {
+        return city;
     }
 
-    public void setReport(Report report) {
-        this.report = report;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    private static class Builder {
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public static class Builder {
+
         private int id;
         private String firstName;
         private String middleName;
@@ -136,16 +124,9 @@ public class ReportPayer extends Entity {
         private String city;
         private String street;
         private String home;
-        private Report report;
-
 
         public Builder id(int id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder report(Report report) {
-            this.report = report;
             return this;
         }
 
@@ -154,18 +135,18 @@ public class ReportPayer extends Entity {
             return this;
         }
 
-        public Builder lastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
         public Builder middleName(String middleName) {
             this.middleName = middleName;
             return this;
         }
 
-        public Builder passportCode(String passportCode) {
-            this.passportCode = passportCode;
+        public Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder passport(String passport) {
+            this.passportCode = passport;
             return this;
         }
 
@@ -197,6 +178,39 @@ public class ReportPayer extends Entity {
         public ReportPayer build() {
             return new ReportPayer(this);
         }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ReportPayer)) return false;
+
+        ReportPayer reportPayer = (ReportPayer) o;
+
+        if (!firstName.equals(reportPayer.firstName)) return false;
+        if (!middleName.equals(reportPayer.middleName)) return false;
+        if (!lastName.equals(reportPayer.lastName)) return false;
+        if (!passport.equals(reportPayer.passport)) return false;
+        if (!postalCode.equals(reportPayer.postalCode)) return false;
+        if (!phone.equals(reportPayer.phone)) return false;
+        if (!city.equals(reportPayer.city)) return false;
+        if (!street.equals(reportPayer.street)) return false;
+        return home.equals(reportPayer.home);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName.hashCode();
+        result = 31 * result + middleName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + passport.hashCode();
+        result = 31 * result + postalCode.hashCode();
+        result = 31 * result + phone.hashCode();
+        result = 31 * result + city.hashCode();
+        result = 31 * result + street.hashCode();
+        result = 31 * result + home.hashCode();
+        return result;
     }
 
     @Override
@@ -205,9 +219,12 @@ public class ReportPayer extends Entity {
                 "firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", passportCode='" + passportCode + '\'' +
+                ", passport='" + passport + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", phone='" + phone + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", home='" + home + '\'' +
                 '}';
     }
 }

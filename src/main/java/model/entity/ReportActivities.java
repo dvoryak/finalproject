@@ -2,7 +2,7 @@ package model.entity;
 
 public class ReportActivities extends Entity {
 
-    private String code;
+    private String text;
     private String name;
     private Report report;
 
@@ -10,19 +10,18 @@ public class ReportActivities extends Entity {
     public ReportActivities() {
     }
 
-    public ReportActivities(int id, String code, String name, Report report) {
+    public ReportActivities(int id, String text, String name) {
         super(id);
-        this.code = code;
+        this.text = text;
         this.name = name;
-        this.report = report;
     }
 
-    public String getCode() {
-        return code;
+    public String getText() {
+        return text;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getName() {
@@ -44,7 +43,7 @@ public class ReportActivities extends Entity {
     @Override
     public String toString() {
         return "ReportActivities{" +
-                "code='" + code + '\'' +
+                "text='" + text + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

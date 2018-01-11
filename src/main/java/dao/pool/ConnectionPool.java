@@ -24,7 +24,7 @@ public enum ConnectionPool {
             return dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
-            //TODO add logger here
+            //TODO save logger here
         }
         return null;
     }

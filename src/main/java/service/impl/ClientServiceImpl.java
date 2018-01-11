@@ -1,12 +1,10 @@
 package service.impl;
 
 import dao.ClientDAO;
-import dao.mysqlDaoImpl.MysqlDaoFactory;
-import dao.pool.ConnectionPool;
 import model.entity.Client;
 import service.ClientService;
 
-import java.sql.Connection;
+import java.util.List;
 
 public class ClientServiceImpl implements ClientService {
 
@@ -22,7 +20,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean add(Client client) {
-        return clientDAO.add(client);
+    public List<Client> findAll() {
+        return clientDAO.findAll();
+    }
+
+    @Override
+    public boolean save(Client client) {
+        return clientDAO.save(client);
     }
 }
