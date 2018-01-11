@@ -1,4 +1,5 @@
 <%@page pageEncoding="UTF-8" %>
+
 <style>
     ul.my-footer li {
         display: inline;
@@ -18,8 +19,6 @@
     .container {
         text-align: center;
     }
-
-
 </style>
 
 <div class="container">
@@ -31,3 +30,8 @@
         </ul>
     </div>
 </div>
+
+<c:set var="lang" value="${cookie.lang.value}" scope="session"/>
+<fmt:setLocale value="${empty sessionScope.lang ? 'en' : sessionScope.lang}"/>
+<fmt:setBundle basename="/i18n/message" var="bundle" scope="session"/>
+</body>

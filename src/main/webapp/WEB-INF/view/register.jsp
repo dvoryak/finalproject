@@ -1,4 +1,4 @@
-<%@include file="components/_header.jsp" %>
+<%@include file="components/_header.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <style>
@@ -15,6 +15,9 @@
     }
 
     .form-register {
+        width: 37%;
+        margin-left: auto;
+        margin-right: auto;
         background-color: #EDEDED;
         padding-top: 10px;
         padding-bottom: 20px;
@@ -35,17 +38,15 @@
         text-align: center;
     }
 
+
+
 </style>
 
 <body>
 
-<%@include file="components/_i18n.jsp"%>
-<%@include file="components/_navbar.jsp" %>
-
-
 <div class="container form-register wrapper" >
     <form action="/" method="post">
-        <div class="input-gr">
+        <div class="input-gr register-wrapper">
             <div class="input-group input-group-lg">
                 <span class="input-group-addon"><fmt:message key="client.fname" bundle="${bundle}"/></span>
                 <input type="text" name="firstName" class="form-control"

@@ -43,9 +43,6 @@
 
 <body>
 
-<%@include file="components/_i18n.jsp" %>
-
-<%@include file="components/_navbar.jsp" %>
 
 <div class="container-fluid">
     <div class="row">

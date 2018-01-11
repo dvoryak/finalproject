@@ -1,7 +1,5 @@
 <%@page pageEncoding="UTF-8" %>
 <%@include file="components/_header.jsp" %>
-<%@include file="components/_i18n.jsp" %>
-<%@include file="components/_navbar.jsp" %>
 
 <style>
     .cab-navbar {
@@ -12,26 +10,59 @@
         font-size: 15px;
     }
 
+    table {
+        width: 100%;
+        align-content: center;
+        text-align: center;
+    }
+
+    .table a {
+        color: crimson;
+    }
+
+    tr,td,th {
+        align-content: center;
+        text-align: center;
+    }
+
 </style>
-<div class="cab-navbar">
-    <nav class="navbar cab-navbar">
-        <div class="container-fluid row">
-            <div class="navbar-header">
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-main">
-                <div class="col-sm-4 col-md-4 col-lg-4">
-                    <a href="#">Active</a>
-                </div>
-                <div class="col-sm-4 col-md-4 col-lg-4">
-                    <a href="#">Not Active</a>
-                </div>
-                <div class="col-sm-4 col-md-4 col-lg-4">
-                    <a href="#">Unchecked</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+
+<div class="list">
+    <div class="container">
+        <table id="table">
+            <tr class="el">
+                <th>№</th>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Institute name</th>
+            </tr>
+        </table>
+    </div>
 </div>
+
+
+<script type="text/javascript" charset="UTF-8">
+    document.onload(getList("unchecked"));
+
+    function getList(name) {
+        $.get('/?command=ajax', {status: name}, function (data) {
+            $('td').remove();
+            var data = $.parseJSON(data);
+            for (var i = 0; i < data.length; i++) {
+                $("#table")
+                    .append('<tr class="el"> <td>' + (i + 1)+ ' </td>' +
+                        '<td>' + data[i].id + '</td>' +
+                        '<td>' + data[i].date + '</td>' +
+                        '<td>' + data[i].institute + '</td>' +
+                        '<td><a href="/?command=edit_page&id=' + data[i].id +'"> Edit </a></td>' +
+                        '<td><a href="/?command=view_page&id=' + data[i].id +'"> View </a></td>' +
+                        '</tr>')
+            }
+
+        });
+    }
+
+</script>
 
 
 <%@include file="components/_footer.jsp" %>

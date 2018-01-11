@@ -1,7 +1,5 @@
 <%@page pageEncoding="UTF-8" %>
 <%@include file="components/_header.jsp" %>
-<%@include file="components/_i18n.jsp" %>
-<%@include file="components/_navbar.jsp" %>
 
 <style>
     .text-tz-wrapper {
