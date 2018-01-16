@@ -1,43 +1,22 @@
-<%@page pageEncoding="UTF-8" %>
 <%@include file="components/_header.jsp" %>
-
-<style>
-    .cab-navbar {
-        align-content: center;
-        text-align: center;
-        background-color: grey;
-        border-color: grey;
-        font-size: 15px;
-    }
-
-    table {
-        width: 100%;
-        align-content: center;
-        text-align: center;
-    }
-
-    .table a {
-        color: crimson;
-    }
-
-    tr,td,th {
-        align-content: center;
-        text-align: center;
-    }
-
-</style>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <div class="list">
     <div class="container">
         <table id="table">
             <tr class="el">
                 <th>№</th>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Institute name</th>
+                <th><fmt:message key="front.id" bundle="${bundle}"/> </th>
+                <th><fmt:message key="front.payer" bundle="${bundle}"/></th>
+                <th><fmt:message key="front.date" bundle="${bundle}"/></th>
+                <th><fmt:message key="front.institute" bundle="${bundle}"/></th>
             </tr>
         </table>
     </div>
+</div>
+
+<div class="empty-list container">
+    <h2><fmt:message key="front.emptyList" bundle="${bundle}"/></h2>
 </div>
 
 
@@ -48,17 +27,24 @@
         $.get('/?command=ajax', {status: name}, function (data) {
             $('td').remove();
             var data = $.parseJSON(data);
+            if(data.length == 0) {
+                $(".list").css("visibility","hidden");
+                $(".empty-list").css("visibility","visible");
+            } else {
+                $(".empty-list").css("visibility","hidden");
+            }
             for (var i = 0; i < data.length; i++) {
+                $(".list").css("visibility","visible");
                 $("#table")
                     .append('<tr class="el"> <td>' + (i + 1)+ ' </td>' +
                         '<td>' + data[i].id + '</td>' +
+                        '<td>' + data[i].payer.firstName + ' ' + data[i].payer.lastName + '</td>' +
                         '<td>' + data[i].date + '</td>' +
                         '<td>' + data[i].institute + '</td>' +
-                        '<td><a href="/?command=edit_page&id=' + data[i].id +'"> Edit </a></td>' +
-                        '<td><a href="/?command=view_page&id=' + data[i].id +'"> View </a></td>' +
+                        '<td><a href="/?command=edit_page&id=' + data[i].id +'"> <fmt:message key='front.edit' bundle='${bundle}'/> </a></td>' +
+                        '<td><a href="/?command=view_page&id=' + data[i].id +'"> <fmt:message key='front.view' bundle='${bundle}'/> </a></td>' +
                         '</tr>')
             }
-
         });
     }
 

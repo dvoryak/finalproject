@@ -1,8 +1,10 @@
+<%@include file="components/_header.jsp"%>
 <%@page pageEncoding="UTF-8" %>
-<%@include file="components/_header.jsp" %>
 
 <div class="container">
     <div class="view-wrap">
+        <span name="id"> id : ${param.id}</span>
+        <br>
         <span><fmt:message key="payer.firstName" bundle="${bundle}"/>  : ${sessionScope.report.payer.firstName}</span>
         <br>
         <span> <fmt:message key="payer.lastName" bundle="${bundle}"/>  : ${sessionScope.report.payer.lastName} </span>
@@ -21,7 +23,8 @@
         <br>
         <span><fmt:message key="report.date" bundle="${bundle}"/> : ${sessionScope.report.date}</span>
         <br>
-        <span>  <fmt:message key="report.employeeNum" bundle="${bundle}"/> : ${sessionScope.report.employeeNumber}</span>
+        <span>  <fmt:message key="report.employeeNum"
+                             bundle="${bundle}"/> : ${sessionScope.report.employeeNumber}</span>
         <br>
         <span><fmt:message key="report.institute" bundle="${bundle}"/> : ${sessionScope.report.institute}</span>
         <br>
@@ -34,9 +37,21 @@
             <br>
         </c:forEach>
         <br>
-        <span>Message : ${sessionScope.report.message}</span>
-        <br>
     </div>
 </div>
 
-<%@include file="components/_footer.jsp" %>
+<form method="post" action="/">
+    <div class="container-fluid check-form">
+        <textarea rows="5" name="message">
+        </textarea>
+        <br>
+        <input type="hidden" name="id" value="${param.id}">
+        <input type="hidden" name="command" value="report_check">
+        <button class="btn btn-success" value="OK" type="submit" name="status"> Accept</button>
+        <button class="btn btn-danger" value="FAILED" type="submit" name="status"> Decline</button>
+    </div>
+</form>
+
+
+
+<%@include file="components/_footer.jsp"%>

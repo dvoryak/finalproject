@@ -1,48 +1,6 @@
 <%@include file="components/_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
-<style>
-    body {
-        background-color: #fff;
-        -webkit-font-smoothing: antialiased;
-        font: normal 14px Roboto, arial, sans-serif;
-    }
-
-    .container {
-        padding: 25px;
-        position: fixed;
-    }
-
-    .form-login {
-        background-color: #EDEDED;
-        padding-top: 10px;
-        padding-bottom: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-        border-radius: 15px;
-        border-color: #d2d2d2;
-        border-width: 5px;
-        box-shadow: 0 1px 0 #cfcfcf;
-    }
-
-    h4 {
-        border: 0 solid #fff;
-        border-bottom-width: 1px;
-        padding-bottom: 10px;
-        text-align: center;
-    }
-
-    .form-control {
-        border-radius: 10px;
-    }
-
-    .wrapper {
-        text-align: center;
-    }
-</style>
-
-<body>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -57,7 +15,7 @@
                            placeholder="<fmt:message key="client.password" bundle="${bundle}"/>"/>
                     </br>
                     <div class="wrapper">
-                        I'm an inspector <input type="checkbox" name="isInspector" value="true"/><br>
+                        <fmt:message key="front.isInspector" bundle="${bundle}"/> <input type="checkbox" name="isInspector" value="true"/><br>
                         <input name="command" value="login" type="hidden">
                         <span class="group-btn">
                              <button type="submit" class="btn btn-success"><fmt:message key="front.logIn" bundle="${bundle}"/></button>
@@ -65,6 +23,9 @@
                     </div>
                 </form>
             </div>
+            <c:if test="${error == 'true'}">
+                <h5 style="color: red; text-align: center"><fmt:message key="client.wrong.input" bundle="${bundle}"/></h5>
+            </c:if>
         </div>
     </div>
 </div>

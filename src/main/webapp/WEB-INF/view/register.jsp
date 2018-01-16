@@ -1,48 +1,7 @@
 <%@include file="components/_header.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
-<style>
-    body {
-        background-color:#fff;
-        -webkit-font-smoothing: antialiased;
-        font: normal 14px Roboto,arial,sans-serif;
-    }
 
-    .container {
-        padding: 25px;
-        position: static;
-        align-content: center;
-    }
-
-    .form-register {
-        width: 37%;
-        margin-left: auto;
-        margin-right: auto;
-        background-color: #EDEDED;
-        padding-top: 10px;
-        padding-bottom: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-        border-radius: 15px;
-        border-color:#d2d2d2;
-        border-width: 5px;
-        box-shadow:0 1px 0 #cfcfcf;
-    }
-
-
-    .form-control {
-        border-radius: 10px;
-    }
-
-    .wrapper {
-        text-align: center;
-    }
-
-
-
-</style>
-
-<body>
 
 <div class="container form-register wrapper" >
     <form action="/" method="post">

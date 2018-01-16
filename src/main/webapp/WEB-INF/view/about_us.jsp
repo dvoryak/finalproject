@@ -1,11 +1,7 @@
 <%@page pageEncoding="UTF-8" %>
 <%@include file="components/_header.jsp" %>
 
-<style>
-    .text-tz-wrapper {
-        font-size: 20px;
-    }
-</style>
+
 <div class="text-tz-wrapper container">
     <p> Система Подачи Отчетов в Налоговую. Физ./Юр.лицо (далее
         Пользователь) регистрируется. Подает отчет (XML/JSON/Форма).

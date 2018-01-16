@@ -5,7 +5,7 @@
         display: inline;
         color: #2f2f2f;
         margin-right: 5px;
-        padding: 3px;
+        padding: 21px;
         align-content: center;
     }
     .my-footer a {
