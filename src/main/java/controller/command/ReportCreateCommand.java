@@ -6,23 +6,29 @@ import model.entity.Report;
 import model.entity.ReportActivities;
 import model.entity.Client;
 import service.ReportService;
+import service.factory.ServiceFactoryImpl;
+import util.InspectorSelectStrategy;
+import util.RandomSelectStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CreateReportCommand implements Command {
+public class ReportCreateCommand implements Command {
 
     private ReportService reportService;
+    private InspectorSelectStrategy selectStrategy;
 
-    public CreateReportCommand(ReportService reportService) {
+    public ReportCreateCommand(ReportService reportService) {
         this.reportService = reportService;
     }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        selectStrategy = new RandomSelectStrategy(new ServiceFactoryImpl());
+
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String middleName = request.getParameter("middleName");
@@ -31,7 +37,9 @@ public class CreateReportCommand implements Command {
         String city = request.getParameter("city");
         String street = request.getParameter("street");
         String home = request.getParameter("home");
-        String postal = request.getParameter("postal");
+        String[] names = request.getParameterValues("name");
+        String[] texts = request.getParameterValues("text");
+        List<ReportActivities> activities = new ArrayList<>();
 
         ReportPayer reportPayer = new ReportPayer.Builder()
                 .firstName(firstName)
@@ -42,20 +50,11 @@ public class CreateReportCommand implements Command {
                 .city(city)
                 .street(street)
                 .home(home)
-                .postalCode(postal)
                 .build();
+        reportPayer.setId(reportPayer.hashCode());
 
 
-        String[] names = request.getParameterValues("name");
-        String[] texts = request.getParameterValues("text");
-        Set<ReportActivities> activities = new HashSet<>();
 
-        for (int i = 0; i < names.length; i++) {
-            ReportActivities ra = new ReportActivities();
-            ra.setName(names[i]);
-            ra.setText(texts[i]);
-            activities.add(ra);
-        }
 
         String institute = request.getParameter("institute");
         int employeeNum = Integer.parseInt(request.getParameter("employeeNum"));
@@ -67,9 +66,20 @@ public class CreateReportCommand implements Command {
                 .date(Date.valueOf(date))
                 .activities(activities)
                 .payer(reportPayer)
-                .status(Report.Status.UNCECKED)
+                .status(Report.Status.UNCHECKED)
                 .user((Client) request.getSession().getAttribute("user"))
+                .inspector(selectStrategy.getInspector())
                 .build();
+        report.setId(report.hashCode());
+
+
+        for (int i = 0; i < names.length; i++) {
+            ReportActivities ra = new ReportActivities();
+            ra.setName(names[i]);
+            ra.setText(texts[i]);
+            ra.setReportId(report.getId());
+            activities.add(ra);
+        }
 
         reportService.save(report);
 

@@ -26,9 +26,17 @@ public enum CommandExecutor {
         commandMap.put(ABOUT_US,new PageAboutUsCommand());
         commandMap.put(AJAX,new CabinetAjaxCommand(new ServiceFactoryImpl().createReportService()));
         commandMap.put(REPORT_PAGE,new PageCreateReportCommand());
-        commandMap.put(CREATE_REPORT, new CreateReportCommand(new ServiceFactoryImpl().createReportService()));
+        commandMap.put(CREATE_REPORT, new ReportCreateCommand(new ServiceFactoryImpl().createReportService()));
         commandMap.put(VIEW_PAGE,new PageViewCommand(new ServiceFactoryImpl().createReportService()));
-        commandMap.put(EDIT_PAGE,new PageEditCommand());
+        commandMap.put(EDIT_PAGE,new PageEditCommand(new ServiceFactoryImpl().createReportService()));
+        commandMap.put(REPORT_EDIT, new ReportEditCommand(new ServiceFactoryImpl().createReportService()));
+        commandMap.put(INSPECTOR_CABINET,new PageInspectorCabinet());
+        commandMap.put(CHECK_PAGE, new PageCheckCommand(new ServiceFactoryImpl().createReportService()));
+        commandMap.put(REPORT_CHECK,new ReportCheckCommand(new ServiceFactoryImpl().createReportService()));
+        commandMap.put(REPORT_EDIT, new ReportEditCommand(new ServiceFactoryImpl().createReportService()));
+        commandMap.put(PAGE_REQUEST_ADD,new PageRequestAdd());
+        commandMap.put(PAGE_REQUEST_SHOW,new PageRequestShow(new ServiceFactoryImpl().createUserRequestService()));
+        commandMap.put(REQUEST_ADD, new RequestAddCommand(new ServiceFactoryImpl().createUserRequestService()));
     }
 
     public String execute(HttpServletRequest request, HttpServletResponse response) {

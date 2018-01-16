@@ -3,9 +3,11 @@ package dao.factory;
 import dao.ClientDAO;
 import dao.InspectorDAO;
 import dao.ReportDAO;
+import dao.UserRequestDAO;
 import dao.mysqlDaoImpl.ClientDAOImpl;
 import dao.mysqlDaoImpl.InspectorDAOImpl;
 import dao.mysqlDaoImpl.ReportDAOImpl;
+import dao.mysqlDaoImpl.UserRequestDAOImpl;
 
 
 public class MysqlDaoFactory extends DAOFactory {
@@ -25,4 +27,8 @@ public class MysqlDaoFactory extends DAOFactory {
         return new InspectorDAOImpl();
     }
 
+    @Override
+    public UserRequestDAO createUserRequestDAO() {
+        return new UserRequestDAOImpl();
+    }
 }

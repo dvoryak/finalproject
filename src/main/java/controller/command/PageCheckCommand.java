@@ -8,11 +8,11 @@ import service.ReportService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PageEditCommand implements Command {
+public class PageCheckCommand implements Command {
 
-    private ReportService reportService;
+    ReportService reportService;
 
-    public PageEditCommand(ReportService reportService) {
+    public PageCheckCommand(ReportService reportService) {
         this.reportService = reportService;
     }
 
@@ -22,6 +22,6 @@ public class PageEditCommand implements Command {
         User user = (User) request.getSession().getAttribute("user");
         Report report = reportService.findById(id);
         request.getSession().setAttribute("report",report);
-        return Pages.EDIT;
+        return Pages.CHECK;
     }
 }

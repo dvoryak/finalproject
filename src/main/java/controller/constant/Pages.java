@@ -9,5 +9,8 @@ public interface Pages {
     String REPORT = "WEB-INF/view/report.jsp";
     String VIEW = "WEB-INF/view/report_view.jsp";
     String EDIT = "WEB-INF/view/report_edit.jsp";
+    String CHECK = "WEB-INF/view/report_check.jsp";
+    String REQUEST_ADD = "WEB-INF/view/request_add.jsp";
+    String REQUEST_SHOW = "WEB-INF/view/request_show.jsp";
 
 }

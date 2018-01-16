@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserRequestImpl implements UserRequestDAO {
+public class UserRequestDAOImpl implements UserRequestDAO {
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
     private final ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
@@ -21,7 +21,7 @@ public class UserRequestImpl implements UserRequestDAO {
     public boolean save(UserRequest userRequest) {
 
         try(Connection connection = pool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.user.save"))) {
+            PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.userReq.save"))) {
             statement.setString(1,userRequest.getText());
             statement.setInt(2,userRequest.getUserId());
             return statement.execute();
@@ -42,9 +42,12 @@ public class UserRequestImpl implements UserRequestDAO {
             statement.setInt(1,userId);
             ResultSet rs = statement.executeQuery();
 
-            if(rs.next()) {
+            while(rs.next()) {
                 userRequests.add(getEntity(rs));
             }
+
+            return userRequests;
+
         } catch (SQLException e) {
             e.printStackTrace();
             //TODO save logger here

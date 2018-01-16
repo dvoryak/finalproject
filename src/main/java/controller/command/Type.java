@@ -6,6 +6,7 @@ public enum Type {
     REPORT_PAGE,
     EDIT_PAGE,
     VIEW_PAGE,
+    CHECK_PAGE,
     LOGOUT,
     CLIENT_CABINET,
     INSPECTOR_CABINET,
@@ -17,6 +18,11 @@ public enum Type {
     REGISTER,
     ABOUT_US,
     AJAX,
-    CREATE_REPORT
+    CREATE_REPORT,
+    REPORT_CHECK,
+    PAGE_REQUEST_ADD,
+    PAGE_REQUEST_SHOW,
+    REQUEST_ADD,
+    REQUEST_SHOW
 
 }

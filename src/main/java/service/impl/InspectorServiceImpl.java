@@ -28,4 +28,9 @@ public class InspectorServiceImpl implements InspectorService {
     public boolean save(Inspector inspector) {
         return inspectorDAO.save(inspector);
     }
+
+    @Override
+    public Inspector findById(int id) {
+        return inspectorDAO.findById(id);
+    }
 }

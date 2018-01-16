@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+/**
+ * @author paveldvoryak
+ *
+ *
+ */
+
 public class InspectorDAOImpl implements InspectorDAO {
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
@@ -76,11 +83,30 @@ public class InspectorDAOImpl implements InspectorDAO {
         return false;
     }
 
+    @Override
+    public Inspector findById(int id) {
+        try(Connection connection = pool.getConnection();
+            Statement statement = connection.createStatement()) {
+            String q = bundle.getString("sql.inspector.findById");
+            q = q.replace("?",Integer.toString(id));
+            ResultSet resultSet = statement.executeQuery(q);
+
+            if (resultSet.next()) {
+                return getEntity(resultSet);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO logger
+        }
+        return null;
+    }
+
     private Inspector getEntity(ResultSet resultSet) throws SQLException {
         return new Inspector(resultSet.getInt("id"),
-                resultSet.getString("firstName"),
-                resultSet.getString("lastName"),
                 resultSet.getString("login"),
-                resultSet.getString("password"));
+                resultSet.getString("password"),
+                resultSet.getString("firstName"),
+                resultSet.getString("lastName"));
     }
 }

@@ -14,4 +14,8 @@ public interface ReportService {
     List<Report> findByUserId(int id);
 
     Report findById(int id);
+
+    List<Report> findByInspectorId(int id);
+
+    boolean update(Report report);
 }

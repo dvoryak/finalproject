@@ -23,8 +23,6 @@ public class PageViewCommand implements Command {
         Report report = reportService.findById(id);
         request.getSession().setAttribute("report",report);
 
-        System.out.println(report);
-
         return Pages.VIEW;
     }
 }

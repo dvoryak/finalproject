@@ -34,7 +34,7 @@ public class LoginCommand implements Command {
         if(isInspector != null) {
             Inspector inspector = inspectorService.findByLogin(login);
             if(checkUser(inspector,login,password)) {
-                request.setAttribute("user",inspector);
+                request.getSession().setAttribute("user",inspector);
                 return Pages.INSPECTOR_CABINET;
             }
 
@@ -45,6 +45,8 @@ public class LoginCommand implements Command {
                 return Pages.CLIENT_CABINET;
             }
         }
+
+        request.setAttribute("error","true");
 
         return Pages.LOGIN;
     }

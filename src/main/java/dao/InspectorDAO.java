@@ -12,4 +12,5 @@ public interface InspectorDAO {
 
     boolean save(Inspector inspector);
 
+    Inspector findById(int id);
 }

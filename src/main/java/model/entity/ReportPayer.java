@@ -1,26 +1,51 @@
 package model.entity;
 
+
+/**
+ * Class that extends @{@link Entity} and represents a payer of report
+ */
+
 public class ReportPayer extends Entity {
 
     private String firstName;
     private String middleName;
     private String lastName;
     private String passport;
-    private String postalCode;
     private String phone;
     private String city;
     private String street;
     private String home;
 
 
-    public ReportPayer(int id, String firstName, String middleName, String lastName, String passport, String postalCode,
+    /**
+     * Constructor for creating a new object without parameters
+     * @see ReportPayer#ReportPayer()
+     */
+    public ReportPayer() {
+    }
+
+    /**
+     * Constructor for creating a new object
+     *
+     * @param id - id
+     * @param firstName - first name of payer
+     * @param middleName - middle name of payer
+     * @param lastName - last name of payer
+     * @param passport - passport of payer
+     * @param phone - phone of payer
+     * @param city - city
+     * @param street - street
+     * @param home - home (number of home)
+     *
+     * @see ReportPayer#ReportPayer(int, String, String, String, String, String, String, String, String)
+     */
+    public ReportPayer(int id, String firstName, String middleName, String lastName, String passport,
                        String phone, String city, String street, String home) {
         super(id);
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.passport = passport;
-        this.postalCode = postalCode;
         this.phone = phone;
         this.city = city;
         this.street = street;
@@ -33,7 +58,6 @@ public class ReportPayer extends Entity {
         this.middleName = builder.middleName;
         this.lastName = builder.lastName;
         this.passport = builder.passportCode;
-        this.postalCode = builder.postalCode;
         this.phone = builder.phone;
         this.city = builder.city;
         this.street = builder.street;
@@ -72,14 +96,6 @@ public class ReportPayer extends Entity {
         this.passport = passport;
     }
 
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -112,6 +128,9 @@ public class ReportPayer extends Entity {
         this.home = home;
     }
 
+    /**
+     * Inner static class that implements a builder's template for creating @{@link ReportPayer}
+     */
     public static class Builder {
 
         private int id;
@@ -119,7 +138,6 @@ public class ReportPayer extends Entity {
         private String middleName;
         private String lastName;
         private String passportCode;
-        private String postalCode;
         private String phone;
         private String city;
         private String street;
@@ -147,11 +165,6 @@ public class ReportPayer extends Entity {
 
         public Builder passport(String passport) {
             this.passportCode = passport;
-            return this;
-        }
-
-        public Builder postalCode(String postalCode) {
-            this.postalCode = postalCode;
             return this;
         }
 
@@ -186,17 +199,16 @@ public class ReportPayer extends Entity {
         if (this == o) return true;
         if (!(o instanceof ReportPayer)) return false;
 
-        ReportPayer reportPayer = (ReportPayer) o;
+        ReportPayer that = (ReportPayer) o;
 
-        if (!firstName.equals(reportPayer.firstName)) return false;
-        if (!middleName.equals(reportPayer.middleName)) return false;
-        if (!lastName.equals(reportPayer.lastName)) return false;
-        if (!passport.equals(reportPayer.passport)) return false;
-        if (!postalCode.equals(reportPayer.postalCode)) return false;
-        if (!phone.equals(reportPayer.phone)) return false;
-        if (!city.equals(reportPayer.city)) return false;
-        if (!street.equals(reportPayer.street)) return false;
-        return home.equals(reportPayer.home);
+        if (!firstName.equals(that.firstName)) return false;
+        if (!middleName.equals(that.middleName)) return false;
+        if (!lastName.equals(that.lastName)) return false;
+        if (!passport.equals(that.passport)) return false;
+        if (!phone.equals(that.phone)) return false;
+        if (!city.equals(that.city)) return false;
+        if (!street.equals(that.street)) return false;
+        return home.equals(that.home);
     }
 
     @Override
@@ -205,7 +217,6 @@ public class ReportPayer extends Entity {
         result = 31 * result + middleName.hashCode();
         result = 31 * result + lastName.hashCode();
         result = 31 * result + passport.hashCode();
-        result = 31 * result + postalCode.hashCode();
         result = 31 * result + phone.hashCode();
         result = 31 * result + city.hashCode();
         result = 31 * result + street.hashCode();
@@ -220,7 +231,6 @@ public class ReportPayer extends Entity {
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", passport='" + passport + '\'' +
-                ", postalCode='" + postalCode + '\'' +
                 ", phone='" + phone + '\'' +
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +

@@ -12,4 +12,5 @@ public interface InspectorService {
 
     boolean save(Inspector inspector);
 
+    Inspector findById(int id);
 }

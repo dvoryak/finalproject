@@ -1,6 +1,14 @@
 package model.entity;
 
-import java.util.Set;
+import java.util.List;
+
+/**
+ *
+ * Class that extends @{@link User} and represents a client
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
 
 public class Client extends User {
 
@@ -9,36 +17,51 @@ public class Client extends User {
     private String phone;
     private String email;
 
-    private Set<Report> reports;
-    private Set<UserRequest> requests;
+    private List<UserRequest> requests;
 
     {
         setRole("Client");
     }
 
+    /**
+     * Constructor for creating a new object without parameters
+     * @see Client#Client()
+     */
     public Client() {
     }
 
+    /**
+     * Constructor for creating a new object
+     *
+     * @param id - id
+     * @param login - login
+     * @param password - password
+     * @param firstName - firstName
+     * @param lastName - lastName
+     * @param phone - phone
+     * @param email - email
+     * @param requests - requests
+     *
+     * @see Client#Client(int, String, String, String, String, String, String, List)
+     */
     public Client(int id, String login, String password, String firstName, String lastName, String phone, String email,
-                  Set<Report> reports, Set<UserRequest> requests) {
+                  List<UserRequest> requests) {
         super(id, login, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.reports = reports;
         this.requests = requests;
     }
 
     private Client(Builder builder) {
         setLogin(builder.login);
         setPassword(builder.password);
-        super.setId(builder.id);
+        setId(builder.id);
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.phone = builder.phone;
         this.email = builder.email;
-        this.reports = builder.reports;
         this.requests = builder.requests;
     }
 
@@ -74,22 +97,19 @@ public class Client extends User {
         this.email = email;
     }
 
-    public Set<Report> getReports() {
-        return reports;
-    }
-
-    public void setReports(Set<Report> reports) {
-        this.reports = reports;
-    }
-
-    public Set<UserRequest> getRequests() {
+    public List<UserRequest> getRequests() {
         return requests;
     }
 
-    public void setRequests(Set<UserRequest> requests) {
+    public void setRequests(List<UserRequest> requests) {
         this.requests = requests;
     }
 
+    /**
+     * Implementation of builder's template for Client
+     *
+     * @author paveldvoryak
+     */
     public static class Builder {
         private int id;
         private String firstName;
@@ -98,8 +118,7 @@ public class Client extends User {
         private String password;
         private String email;
         private String phone;
-        private Set<Report> reports;
-        private Set<UserRequest> requests;
+        private List<UserRequest> requests;
 
 
         public Builder() {
@@ -141,12 +160,7 @@ public class Client extends User {
             return this;
         }
 
-        public Builder reports(Set<Report> reports) {
-            this.reports = reports;
-            return this;
-        }
-
-        public Builder request(Set<UserRequest> reports) {
+        public Builder request(List<UserRequest> reports) {
             this.requests = requests;
             return this;
         }
@@ -156,20 +170,6 @@ public class Client extends User {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Client)) return false;
-
-        Client client = (Client) o;
-
-        if (!firstName.equals(client.firstName)) return false;
-        if (!lastName.equals(client.lastName)) return false;
-        if (!phone.equals(client.phone)) return false;
-        if (!email.equals(client.email)) return false;
-        if (reports != null ? !reports.equals(client.reports) : client.reports != null) return false;
-        return requests != null ? requests.equals(client.requests) : client.requests == null;
-    }
 
     @Override
     public int hashCode() {
@@ -177,7 +177,6 @@ public class Client extends User {
         result = 31 * result + lastName.hashCode();
         result = 31 * result + phone.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + (reports != null ? reports.hashCode() : 0);
         result = 31 * result + (requests != null ? requests.hashCode() : 0);
         return result;
     }
@@ -189,7 +188,6 @@ public class Client extends User {
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", reports=" + reports +
                 ", requests=" + requests +
                 '}';
     }

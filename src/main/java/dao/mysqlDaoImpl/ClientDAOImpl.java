@@ -3,6 +3,7 @@ package dao.mysqlDaoImpl;
 import dao.ClientDAO;
 import dao.pool.ConnectionPool;
 import model.entity.Client;
+import model.entity.Inspector;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,6 +28,25 @@ public class ClientDAOImpl implements ClientDAO {
             if (resultSet.next()) {
                 return getEntity(resultSet);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO logger
+        }
+        return null;
+    }
+
+    @Override
+    public Client findById(int id) {
+        try(Connection connection = pool.getConnection();
+            Statement statement = connection.createStatement()) {
+            String q = bundle.getString("sql.client.findById");
+            q = q.replace("?",Integer.toString(id));
+            ResultSet resultSet = statement.executeQuery(q);
+
+            if (resultSet.next()) {
+                return getEntity(resultSet);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             //TODO logger

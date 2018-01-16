@@ -1,8 +1,15 @@
 package model.entity;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
+/**
+ * Class that extends a @{@link Entity} and represents Report
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
 public class Report extends Entity {
 
     private String institute;
@@ -14,12 +21,17 @@ public class Report extends Entity {
     private Inspector inspector;
     private ReportPayer payer;
 
-    private Set<ReportActivities> activities;
+    private List<ReportActivities> activities;
 
+
+    /**
+     * Inner static enum that represents a status of report
+     *
+     */
     public static enum Status {
         OK(1),
         FAILED(2),
-        UNCECKED(3);
+        UNCHECKED(3);
 
         private int id;
 
@@ -32,11 +44,32 @@ public class Report extends Entity {
         }
     }
 
+    /**
+     * Constructor for creating a new object without parameters
+     * @see Report#Report()
+     */
     public Report() {
     }
 
+
+    /**
+     * Constructor for creating a new object
+     *
+     * @param id - id
+     * @param institute - name of institute
+     * @param employeeNumber - number of employees
+     * @param date - date @{@link Date}
+     * @param message - message
+     * @param status - status of report
+     * @param client - owner of report @{@link Client}
+     * @param inspector - person which should process report @{@link Report}
+     * @param payer - payer @{@link ReportPayer}
+     * @param activities - activities @{@link ReportActivities}
+     *
+     * @see Report#Report(int, String, int, Date, String, Status, Client, Inspector, ReportPayer, List)
+     */
     public Report(int id, String institute, int employeeNumber, Date date, String message, Status status, Client client,
-                  ReportPayer payer, Set<ReportActivities> activities) {
+                  Inspector inspector, ReportPayer payer, List<ReportActivities> activities) {
         super(id);
         this.institute = institute;
         this.employeeNumber = employeeNumber;
@@ -44,6 +77,7 @@ public class Report extends Entity {
         this.message = message;
         this.status = status;
         this.client = client;
+        this.inspector = inspector;
         this.payer = payer;
         this.activities = activities;
     }
@@ -58,6 +92,8 @@ public class Report extends Entity {
         this.client = builder.client;
         this.payer = builder.reportPayer;
         this.activities = builder.activities;
+        this.inspector = builder.inspector;
+        this.client = builder.client;
     }
 
     public String getInstitute() {
@@ -100,11 +136,11 @@ public class Report extends Entity {
         this.client = client;
     }
 
-    public Set<ReportActivities> getActivities() {
+    public List<ReportActivities> getActivities() {
         return activities;
     }
 
-    public void setActivities(Set<ReportActivities> activities) {
+    public void setActivities(List<ReportActivities> activities) {
         this.activities = activities;
     }
 
@@ -124,6 +160,18 @@ public class Report extends Entity {
         this.payer = payer;
     }
 
+    public Inspector getInspector() {
+        return inspector;
+    }
+
+    public void setInspector(Inspector inspector) {
+        this.inspector = inspector;
+    }
+
+
+    /**
+     * Inner static class that implements a builder's template for creating @{@link Report}
+     */
     public static class Builder {
 
         private int id;
@@ -133,7 +181,8 @@ public class Report extends Entity {
         private Status status;
         private Client client;
         private ReportPayer reportPayer;
-        private Set<ReportActivities> activities;
+        private Inspector inspector;
+        private List<ReportActivities> activities;
         private String message;
 
         public Builder id(int id) {
@@ -166,6 +215,16 @@ public class Report extends Entity {
             return this;
         }
 
+        public Builder inspector(Inspector inspector) {
+            this.inspector = inspector;
+            return this;
+        }
+
+        public Builder client(Client client) {
+            this.client = client;
+            return this;
+        }
+
         public Builder status(Status status) {
             this.status = status;
             return this;
@@ -177,7 +236,7 @@ public class Report extends Entity {
         }
 
 
-        public Builder activities(Set<ReportActivities> activities) {
+        public Builder activities(List<ReportActivities> activities) {
             this.activities = activities;
             return this;
         }
@@ -206,14 +265,13 @@ public class Report extends Entity {
 
         @Override
         public int hashCode() {
-            int result = id;
-            result = 31 * result + institute.hashCode();
+            int result = institute.hashCode();
             result = 31 * result + employeeNumber;
             result = 31 * result + date.hashCode();
             result = 31 * result + status.hashCode();
-            result = 31 * result + (client != null ? client.hashCode() : 0);
+            result = 31 * result + client.hashCode();
             result = 31 * result + (reportPayer != null ? reportPayer.hashCode() : 0);
-            result = 31 * result + (activities != null ? activities.hashCode() : 0);
+            result = 31 * result + (inspector != null ? inspector.hashCode() : 0);
             result = 31 * result + (message != null ? message.hashCode() : 0);
             return result;
         }

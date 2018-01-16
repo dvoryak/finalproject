@@ -1,15 +1,13 @@
 package controller.command;
 
 import com.google.gson.Gson;
-import model.entity.Client;
 import model.entity.Report;
+import model.entity.User;
 import service.ReportService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -28,8 +26,12 @@ public class CabinetAjaxCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        Client client = (Client) request.getSession().getAttribute("user");
-        reports = reportService.findByUserId(client.getId());
+        User user = (User) request.getSession().getAttribute("user");
+        if(user.getRole().equals("Inspector")) {
+            reports = reportService.findByInspectorId(user.getId());
+        } else if(user.getRole().equals("Client")) {
+            reports = reportService.findByUserId(user.getId());
+        }
         String name = request.getParameter("status");
         String resp = null;
         if(name != null) {
@@ -41,18 +43,20 @@ public class CabinetAjaxCommand implements Command {
                     resp = getJSON(reports.stream().filter(report -> report.getStatus() == Report.Status.FAILED).collect(Collectors.toList()));
                     break;
                 case "unchecked":
-                    resp = getJSON(reports.stream().filter(report -> report.getStatus() == Report.Status.UNCECKED).collect(Collectors.toList()));
+                    resp = getJSON(reports.stream().filter(report -> report.getStatus() == Report.Status.UNCHECKED).collect(Collectors.toList()));
+                    break;
+                case "checked" :
+                    resp = getJSON(reports.stream().filter(report -> report.getStatus() != Report.Status.UNCHECKED).collect(Collectors.toList()));
                     break;
             }
 
             try {
-                response.setContentType("UTF-8");
-                response.setCharacterEncoding("UTF-8");
                 response.getWriter().append(resp);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 

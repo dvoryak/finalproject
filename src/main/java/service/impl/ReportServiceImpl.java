@@ -34,4 +34,14 @@ public class ReportServiceImpl implements ReportService {
     public Report findById(int id) {
         return reportDAO.findById(id);
     }
+
+    @Override
+    public boolean update(Report report) {
+        return reportDAO.update(report);
+    }
+
+    @Override
+    public List<Report> findByInspectorId(int id) {
+        return reportDAO.findByInspectorId(id);
+    }
 }

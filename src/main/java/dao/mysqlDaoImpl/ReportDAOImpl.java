@@ -4,7 +4,6 @@ import dao.ReportDAO;
 import dao.pool.ConnectionPool;
 import model.entity.Report;
 import model.entity.ReportActivities;
-import model.entity.ReportPayer;
 
 import java.sql.*;
 import java.util.*;
@@ -16,47 +15,30 @@ public class ReportDAOImpl implements ReportDAO {
 
     @Override
     public boolean save(Report report) {
-        try(Connection connection = pool.getConnection()) {
-
+        try(Connection connection = pool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.save"))) {
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 
-            PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.savePayer"));
-            ps.setInt(1,report.getPayer().hashCode());
-            ps.setString(2,report.getPayer().getFirstName());
-            ps.setString(3,report.getPayer().getLastName());
-            ps.setString(4,report.getPayer().getMiddleName());
-            ps.setString(5,report.getPayer().getPassport());
-            ps.setString(6,report.getPayer().getPhone());
-            ps.setString(7,report.getPayer().getCity());
-            ps.setString(8,report.getPayer().getStreet());
-            ps.setString(9,report.getPayer().getHome());
-            ps.execute();
-            ps.close();
 
-            ps = connection.prepareStatement(bundle.getString("sql.report.save"));
-            ps.setInt(1,report.hashCode());
+            new ReportPayerDAOImpl()
+                    .save(report.getPayer(),connection);
+
+            ps.setInt(1,report.getId());
             ps.setString(2,report.getInstitute());
             ps.setInt(3,report.getEmployeeNumber());
             ps.setDate(4,report.getDate());
             ps.setString(5,report.getMessage());
             ps.setInt(6,report.getStatus().getId());
-            ps.setInt(7,report.getPayer().hashCode());
+            ps.setInt(7,report.getPayer().getId());
             ps.setInt(8,report.getClient().getId());
+            ps.setInt(9,report.getInspector().getId());
             ps.execute();
             ps.close();
 
-            System.out.println(report);
+            List<ReportActivities> activities = report.getActivities();
 
-            Set<ReportActivities> activities = report.getActivities();
-            ps = connection.prepareStatement(bundle.getString("sql.report.saveActivities"));
-            for(ReportActivities activity : activities) {
-                ps.setString(1, activity.getName());
-                ps.setString(2, activity.getText());
-                ps.setInt(3, report.hashCode());
-                ps.execute();
-            }
-            ps.close();
+            new ReportActivitiesDAOImpl().save(connection,activities.toArray(new ReportActivities[]{}));
 
             connection.commit();
 
@@ -132,49 +114,72 @@ public class ReportDAOImpl implements ReportDAO {
         return null;
     }
 
+    @Override
+    public List<Report> findByInspectorId(int id) {
+        List<Report> reports = new ArrayList<>();
+        try(Connection connection = pool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findByInspector"))) {
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+
+            while(rs.next()) {
+                reports.add(getEntity(rs));
+            }
+
+            return reports;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO logger
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean update(Report report) {
+        try(Connection connection = pool.getConnection();
+            PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.update"))) {
+            connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+
+            ps.setString(1,report.getInstitute());
+            ps.setInt(2,report.getEmployeeNumber());
+            ps.setDate(3,report.getDate());
+            ps.setString(4,report.getMessage());
+            ps.setInt(5,report.getStatus().getId());
+            ps.setInt(6,report.getId());
+            ps.execute();
+            ps.close();
+
+            new ReportPayerDAOImpl()
+             .update(report.getPayer(),connection);
+
+            new ReportActivitiesDAOImpl()
+                    .update(connection,report.getActivities().toArray(new ReportActivities[]{}));
+
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return false;
+    }
+
     private Report getEntity(ResultSet rs) throws SQLException {
         return new Report.Builder()
                 .id(rs.getInt("id"))
                 .institute(rs.getString("institution"))
                 .employeeNumber(rs.getInt("employeesNumber"))
                 .date(rs.getDate("data"))
+                .message(rs.getString("message"))
                 .status(Report.Status.values()[rs.getInt("statusId") - 1])
-                .payer(new ReportPayer.Builder()
-                        .id(rs.getInt("payerId")) // ?
-                        .firstName(rs.getString("firstName"))
-                        .lastName(rs.getString("lastName"))
-                        .middleName(rs.getString("middleName"))
-                        .passport(rs.getString("passport"))
-                        .phone(rs.getString("phone"))
-                        .city(rs.getString("city"))
-                        .street(rs.getString("street"))
-                        .home(rs.getString("home"))
-                        .build())
-                .activities(getActivites(rs.getInt("id")))
+                .client(new ClientDAOImpl().findById(rs.getInt("userId")))
+                .payer(new ReportPayerDAOImpl().findById(rs.getInt("payerId")))
+                .inspector(new InspectorDAOImpl().findById(rs.getInt("inspector_id")))
+                .activities(new ReportActivitiesDAOImpl().findByReportId(rs.getInt("id")))
                 .build();
     }
 
-    private Set<ReportActivities> getActivites(int reportId) {
-        try(Connection connection = pool.getConnection();
-            Statement statement = connection.createStatement()) {
-            Set<ReportActivities> activities = new HashSet<>();
-            String q = bundle.getString("sql.activtity.getByReportId").replace("?",Integer.toString(reportId));
-            ResultSet rs = statement.executeQuery(q);
-            while(rs.next()) {
-                activities.add(new ReportActivities(
-                        rs.getInt("id"),
-                        rs.getString("text"),
-                        rs.getString("name")
-                ));
-            }
-
-            return activities;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-
-    }
 }
