@@ -38,20 +38,17 @@ public class Controller extends HttpServlet {
         String execute = null;
         try {
             execute = executor.execute(req,resp);
+            if(execute != null) {
+                logger.info("Before forward" + execute);
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
+                requestDispatcher.forward(req, resp);
+            }
+        } catch (ServletException | IOException e) {
+            logger.warn(e);
+            e.printStackTrace();
         } catch (Exception e) {
             req.getRequestDispatcher(new PageError().execute(req,resp)).forward(req,resp);
         }
 
-        if(execute != null) {
-            try {
-                logger.info("Before forward to : " + execute);
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
-                requestDispatcher.forward(req, resp);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

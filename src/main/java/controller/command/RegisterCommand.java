@@ -1,6 +1,7 @@
 package controller.command;
 
 import controller.constant.Pages;
+import exception.WrongInputException;
 import model.entity.Client;
 import service.ClientService;
 
@@ -18,15 +19,33 @@ public class RegisterCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+
+
         Client client = new Client.Builder()
-                .firstName(request.getParameter("firstName"))
-                .lastName(request.getParameter("lastName"))
-                .login(request.getParameter("login"))
-                .password(request.getParameter("password"))
-                .email(request.getParameter("email"))
-                .phone(request.getParameter("phone"))
+                .firstName(firstName)
+                .lastName(lastName)
+                .login(login)
+                .password(password)
+                .email(email)
+                .phone(phone)
                 .build();
-        clientService.save(client);
+        try {
+            clientService.register(client);
+        } catch (WrongInputException e) {
+            request.setAttribute("exception",e.getMessage());
+            request.setAttribute("tmp_user",client);
+            return Pages.REGISTER;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return Pages.LOGIN;
     }
+
 }

@@ -1,5 +1,6 @@
 package service;
 
+import exception.WrongInputException;
 import model.entity.Client;
 
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public interface ClientService {
      */
     Client findByLogin(String login) throws SQLException;
 
+    boolean register(Client client) throws WrongInputException, SQLException;
 
     /**
      * Find all client in database
