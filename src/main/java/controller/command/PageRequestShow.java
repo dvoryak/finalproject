@@ -7,6 +7,7 @@ import service.UserRequestService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
 
 public class PageRequestShow implements Command {
@@ -18,7 +19,7 @@ public class PageRequestShow implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         User user = (User) request.getSession().getAttribute("user");
         List<UserRequest> byUserId = requestService.findByUserId(user.getId());
         request.getSession().setAttribute("requests",byUserId);

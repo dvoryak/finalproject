@@ -1,14 +1,11 @@
-package service.factory;
+package service.impl;
 
-import dao.factory.MysqlDaoFactory;
+import dao.mysqlDaoImpl.MysqlDaoFactory;
 import service.InspectorService;
 import service.ReportService;
 import service.ClientService;
 import service.UserRequestService;
-import service.impl.ClientServiceImpl;
-import service.impl.InspectorServiceImpl;
-import service.impl.ReportServiceImpl;
-import service.impl.UserRequestServiceImpl;
+import service.ServiceFactory;
 
 
 public class ServiceFactoryImpl extends ServiceFactory {

@@ -3,10 +3,11 @@ package controller.command;
 import model.entity.Report;
 import model.entity.User;
 import service.ReportService;
-import service.factory.ServiceFactory;
+import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 public class ReportViewCommand implements Command {
 
@@ -17,7 +18,7 @@ public class ReportViewCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
         User user = (User) request.getSession().getAttribute("user");
         ReportService reportService = serviceFactory.createReportService();

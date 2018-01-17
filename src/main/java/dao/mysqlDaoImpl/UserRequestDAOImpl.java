@@ -3,6 +3,7 @@ package dao.mysqlDaoImpl;
 import dao.UserRequestDAO;
 import dao.pool.ConnectionPool;
 import model.entity.UserRequest;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * MySQL implementation of @{@link UserRequestDAO}
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
+
 public class UserRequestDAOImpl implements UserRequestDAO {
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
     private final ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
+    private static final Logger logger = Logger.getLogger(UserRequestDAOImpl.class);
 
     @Override
-    public boolean save(UserRequest userRequest) {
+    public boolean save(UserRequest userRequest) throws SQLException {
 
         try(Connection connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.userReq.save"))) {
@@ -27,15 +36,14 @@ public class UserRequestDAOImpl implements UserRequestDAO {
             return statement.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO save logger here
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return false;
     }
 
     @Override
-    public List<UserRequest> findByUserId(int userId) {
+    public List<UserRequest> findByUserId(int userId) throws SQLException {
         List<UserRequest> userRequests = new ArrayList<>();
         try(Connection connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.userReq.findByUserId"))) {
@@ -49,11 +57,10 @@ public class UserRequestDAOImpl implements UserRequestDAO {
             return userRequests;
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO save logger here
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return null;
     }
 
     private UserRequest getEntity(ResultSet rs) throws SQLException {

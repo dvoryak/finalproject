@@ -5,12 +5,14 @@ import controller.constant.Pages;
 import model.entity.Client;
 import model.entity.Inspector;
 import model.entity.User;
+import org.apache.log4j.Logger;
 import service.ClientService;
 import service.InspectorService;
-import service.factory.ServiceFactory;
+import service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 
 public class LoginCommand implements Command {
@@ -22,7 +24,7 @@ public class LoginCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
@@ -45,6 +47,7 @@ public class LoginCommand implements Command {
                 return Pages.CLIENT_CABINET;
             }
         }
+
 
         request.setAttribute("error","true");
 

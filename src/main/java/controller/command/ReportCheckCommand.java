@@ -6,6 +6,7 @@ import service.ReportService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 public class ReportCheckCommand implements Command {
 
@@ -16,7 +17,7 @@ public class ReportCheckCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         String message = request.getParameter("message");
         String status = request.getParameter("status");
         String id = request.getParameter("id");

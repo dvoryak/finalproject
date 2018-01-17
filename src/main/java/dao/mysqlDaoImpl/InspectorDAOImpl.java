@@ -3,6 +3,7 @@ package dao.mysqlDaoImpl;
 import dao.InspectorDAO;
 import dao.pool.ConnectionPool;
 import model.entity.Inspector;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,13 +12,14 @@ import java.util.ResourceBundle;
 
 
 /**
+ * MySQL implementation of @{@link InspectorDAO}
+ *
  * @author paveldvoryak
- *
- *
+ * @version 1.0
  */
-
 public class InspectorDAOImpl implements InspectorDAO {
 
+    private final static Logger logger = Logger.getLogger(InspectorDAOImpl.class);
     private ConnectionPool pool = ConnectionPool.INSTANCE;
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
 
@@ -25,7 +27,7 @@ public class InspectorDAOImpl implements InspectorDAO {
     }
 
     @Override
-    public Inspector findByLogin(String login) {
+    public Inspector findByLogin(String login) throws SQLException {
         try(Connection connection = pool.getConnection();
             Statement statement = connection.createStatement()) {
             String q = bundle.getString("sql.inspector.findByLogin");
@@ -37,14 +39,14 @@ public class InspectorDAOImpl implements InspectorDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
         return null;
     }
 
     @Override
-    public List<Inspector> findAll() {
+    public List<Inspector> findAll() throws SQLException {
         try(Connection connection = pool.getConnection();
             Statement statement = connection.createStatement()) {
             ArrayList<Inspector> inspectors = new ArrayList<>();
@@ -57,15 +59,14 @@ public class InspectorDAOImpl implements InspectorDAO {
 
             return inspectors;
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return null;
     }
 
     @Override
-    public boolean save(Inspector inspector) {
+    public boolean save(Inspector inspector) throws SQLException {
         try(Connection connection = pool.getConnection();
             PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.inspector.findAll"))) {
             ps.setInt(1,inspector.hashCode());
@@ -77,14 +78,13 @@ public class InspectorDAOImpl implements InspectorDAO {
             return ps.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
-        return false;
     }
 
     @Override
-    public Inspector findById(int id) {
+    public Inspector findById(int id) throws SQLException {
         try(Connection connection = pool.getConnection();
             Statement statement = connection.createStatement()) {
             String q = bundle.getString("sql.inspector.findById");
@@ -96,8 +96,8 @@ public class InspectorDAOImpl implements InspectorDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
         return null;
     }

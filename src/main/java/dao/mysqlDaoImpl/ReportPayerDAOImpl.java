@@ -1,19 +1,30 @@
 package dao.mysqlDaoImpl;
 
+import dao.ClientDAO;
 import dao.ReportPayerDAO;
 import dao.pool.ConnectionPool;
 import model.entity.ReportPayer;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ResourceBundle;
+
+
+/**
+ * MySQL implementation of @{@link ReportPayerDAO}
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
 
 public class ReportPayerDAOImpl implements ReportPayerDAO {
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
+    private final Logger logger = Logger.getLogger(ReportDAOImpl.class);
 
     @Override
-    public ReportPayer findById(int id) {
+    public ReportPayer findById(int id) throws SQLException {
         try(Connection connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.payer.findById"))) {
             statement.setInt(1,id);
@@ -24,8 +35,8 @@ public class ReportPayerDAOImpl implements ReportPayerDAO {
                 return entity;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO save logger here
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
         return null;
@@ -33,7 +44,7 @@ public class ReportPayerDAOImpl implements ReportPayerDAO {
 
 
     @Override
-    public boolean update(ReportPayer reportPayer, Connection connection) {
+    public boolean update(ReportPayer reportPayer, Connection connection) throws SQLException {
         try(PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.payer.update"))) {
             ps.setString(1,reportPayer.getFirstName());
             ps.setString(2,reportPayer.getLastName());
@@ -48,14 +59,13 @@ public class ReportPayerDAOImpl implements ReportPayerDAO {
             return ps.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
-
-        return false;
     }
 
     @Override
-    public boolean save(ReportPayer reportPayer, Connection connection) {
+    public boolean save(ReportPayer reportPayer, Connection connection) throws SQLException {
         try(PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.payer.save"))) {
             ps.setInt(1,reportPayer.hashCode());
             ps.setString(2,reportPayer.getFirstName());
@@ -70,10 +80,10 @@ public class ReportPayerDAOImpl implements ReportPayerDAO {
             return ps.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return false;
     }
 
     private ReportPayer getEntity(ResultSet rs) throws SQLException {

@@ -5,7 +5,7 @@ import controller.constant.Pages;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PageCreateReportCommand implements Command {
+public class PageReportCreateCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

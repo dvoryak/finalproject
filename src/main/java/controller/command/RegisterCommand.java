@@ -6,6 +6,7 @@ import service.ClientService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 public class RegisterCommand implements Command {
 
@@ -16,7 +17,7 @@ public class RegisterCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         Client client = new Client.Builder()
                 .firstName(request.getParameter("firstName"))
                 .lastName(request.getParameter("lastName"))

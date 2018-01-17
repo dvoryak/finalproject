@@ -1,6 +1,8 @@
 package controller;
 
 import controller.command.CommandExecutor;
+import controller.command.PageError;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+/**
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
 @WebServlet(urlPatterns = "/")
 public class Controller extends HttpServlet {
+
+    private static CommandExecutor executor = CommandExecutor.INSTANCE;
+    private final static Logger logger = Logger.getLogger(Controller.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,10 +34,17 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp) {
-        String execute = CommandExecutor.INSTANCE.execute(req,resp);
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String execute = null;
+        try {
+            execute = executor.execute(req,resp);
+        } catch (Exception e) {
+            req.getRequestDispatcher(new PageError().execute(req,resp)).forward(req,resp);
+        }
+
         if(execute != null) {
             try {
+                logger.info("Before forward to : " + execute);
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
                 requestDispatcher.forward(req, resp);
             } catch (ServletException e) {

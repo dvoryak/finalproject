@@ -3,23 +3,34 @@ package dao.mysqlDaoImpl;
 import dao.ClientDAO;
 import dao.pool.ConnectionPool;
 import model.entity.Client;
-import model.entity.Inspector;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * MySQL implementation of @{@link ClientDAO}
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
+
 public class ClientDAOImpl implements ClientDAO {
+
+    private static final Logger logger = Logger.getLogger(ClientDAOImpl.class);
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
 
+
     public ClientDAOImpl() {
     }
 
+
     @Override
-    public Client findByLogin(String login) {
+    public Client findByLogin(String login) throws SQLException {
         try(Connection connection = pool.getConnection();
             Statement statement = connection.createStatement()) {
             String q = bundle.getString("sql.client.findByLogin");
@@ -29,14 +40,15 @@ public class ClientDAOImpl implements ClientDAO {
                 return getEntity(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error " + e);
+            throw e;
         }
+
         return null;
     }
 
     @Override
-    public Client findById(int id) {
+    public Client findById(int id) throws SQLException {
         try(Connection connection = pool.getConnection();
             Statement statement = connection.createStatement()) {
             String q = bundle.getString("sql.client.findById");
@@ -48,14 +60,14 @@ public class ClientDAOImpl implements ClientDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error " + e);
+            throw e;
         }
         return null;
     }
 
     @Override
-    public List<Client> findAll() {
+    public List<Client> findAll() throws SQLException {
         try(Connection connection = pool.getConnection();
             Statement statement = connection.createStatement()) {
             List<Client> clients = new ArrayList<>();
@@ -65,14 +77,13 @@ public class ClientDAOImpl implements ClientDAO {
             }
             return clients;
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error " + e);
+            throw e;
         }
-        return null;
     }
 
     @Override
-    public boolean save(Client client) {
+    public boolean save(Client client) throws SQLException {
         try(Connection connection = pool.getConnection();
             PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.client.save"))) {
             ps.setInt(1,client.hashCode());
@@ -85,10 +96,9 @@ public class ClientDAOImpl implements ClientDAO {
             return ps.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error " + e);
+            throw e;
         }
-        return false;
     }
 
     private Client getEntity(ResultSet rs) throws SQLException {

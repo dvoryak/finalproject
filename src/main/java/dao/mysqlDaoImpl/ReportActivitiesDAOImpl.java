@@ -3,17 +3,26 @@ package dao.mysqlDaoImpl;
 import dao.ReportActivitiesDAO;
 import dao.pool.ConnectionPool;
 import model.entity.ReportActivities;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
+
+/**
+ * MySQL implementation of @{@link ReportActivitiesDAO}
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
 
 public class ReportActivitiesDAOImpl implements ReportActivitiesDAO {
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
+    private Logger logger = Logger.getLogger(ReportActivitiesDAOImpl.class);
 
     @Override
-    public List<ReportActivities> findByReportId(int reportId) {
+    public List<ReportActivities> findByReportId(int reportId) throws SQLException {
         try (Connection connection = pool.getConnection();
              Statement statement = connection.createStatement()) {
             List<ReportActivities> activities = new ArrayList<>();
@@ -32,10 +41,10 @@ public class ReportActivitiesDAOImpl implements ReportActivitiesDAO {
             return activities;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return null;
     }
 
     @Override

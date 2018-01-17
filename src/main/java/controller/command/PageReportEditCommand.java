@@ -7,17 +7,18 @@ import service.ReportService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
-public class PageEditCommand implements Command {
+public class PageReportEditCommand implements Command {
 
     private ReportService reportService;
 
-    public PageEditCommand(ReportService reportService) {
+    public PageReportEditCommand(ReportService reportService) {
         this.reportService = reportService;
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         int id = Integer.parseInt(request.getParameter("id"));
         User user = (User) request.getSession().getAttribute("user");
         Report report = reportService.findById(id);

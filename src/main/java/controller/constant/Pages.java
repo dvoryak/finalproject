@@ -12,5 +12,6 @@ public interface Pages {
     String CHECK = "WEB-INF/view/report_check.jsp";
     String REQUEST_ADD = "WEB-INF/view/request_add.jsp";
     String REQUEST_SHOW = "WEB-INF/view/request_show.jsp";
+    String ACESS_DENIED = "WEB-INF/view/error.jsp";
 
 }

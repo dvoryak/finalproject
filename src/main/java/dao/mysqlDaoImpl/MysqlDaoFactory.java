@@ -1,9 +1,6 @@
-package dao.factory;
+package dao.mysqlDaoImpl;
 
-import dao.ClientDAO;
-import dao.InspectorDAO;
-import dao.ReportDAO;
-import dao.UserRequestDAO;
+import dao.*;
 import dao.mysqlDaoImpl.ClientDAOImpl;
 import dao.mysqlDaoImpl.InspectorDAOImpl;
 import dao.mysqlDaoImpl.ReportDAOImpl;

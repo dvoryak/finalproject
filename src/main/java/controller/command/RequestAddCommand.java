@@ -7,6 +7,7 @@ import service.UserRequestService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 public class RequestAddCommand implements Command {
 
@@ -17,7 +18,7 @@ public class RequestAddCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         User user = (User) request.getSession().getAttribute("user");
         String text = request.getParameter("text");
         UserRequest userRequest = new UserRequest();

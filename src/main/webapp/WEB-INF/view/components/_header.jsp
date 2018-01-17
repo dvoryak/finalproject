@@ -41,42 +41,6 @@
 <fmt:setLocale value="${empty sessionScope.lang ? 'en' : sessionScope.lang}"/>
 <fmt:setBundle basename="/i18n/message" var="bundle" scope="session"/>
 
-<style>
-    body {
-        background-color: #fff;
-        -webkit-font-smoothing: antialiased;
-        font: normal 14px Roboto, arial, sans-serif;
-    }
-
-    li a:hover {
-        background-color: blueviolet;
-        color: red;
-    }
-
-    a:hover, a:focus {
-        color: brown;
-        text-decoration: none;
-        outline: 0;
-    }
-
-    a {
-        color: aqua;
-    }
-
-    .navbar {
-        font-weight: 800;
-        font-size: 14px;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        background: #2d2d2d;
-        border-color: #2d2d2d;
-    }
-
-    .main-nav a {
-        color: #f2f2f2;
-    }
-
-</style>
 
 <div class="main-nav">
     <nav class="navbar">

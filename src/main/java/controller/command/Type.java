@@ -23,6 +23,6 @@ public enum Type {
     PAGE_REQUEST_ADD,
     PAGE_REQUEST_SHOW,
     REQUEST_ADD,
-    REQUEST_SHOW
-
+    REQUEST_SHOW,
+    PAGE_ACESS_DENIED
 }

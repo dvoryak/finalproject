@@ -1,17 +1,17 @@
 package util;
 
 import model.entity.Inspector;
-import model.entity.Report;
 import service.InspectorService;
-import service.ReportService;
-import service.factory.ServiceFactory;
-import service.factory.ServiceFactoryImpl;
+import service.ServiceFactory;
 
-import java.util.HashMap;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
+/**
+ * @author paveldvoryak
+ * @version 1.0
+ */
 public class RandomSelectStrategy implements InspectorSelectStrategy {
 
     private ServiceFactory serviceFactory;
@@ -21,7 +21,7 @@ public class RandomSelectStrategy implements InspectorSelectStrategy {
     }
 
     @Override
-    public Inspector getInspector() {
+    public Inspector getInspector() throws SQLException {
         InspectorService inspectorService = serviceFactory.createInspectorService();
 
         List<Inspector> inspectors = inspectorService.findAll();

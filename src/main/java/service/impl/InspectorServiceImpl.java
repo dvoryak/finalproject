@@ -4,6 +4,7 @@ import dao.InspectorDAO;
 import model.entity.Inspector;
 import service.InspectorService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class InspectorServiceImpl implements InspectorService {
@@ -15,22 +16,22 @@ public class InspectorServiceImpl implements InspectorService {
     }
 
     @Override
-    public Inspector findByLogin(String login) {
+    public Inspector findByLogin(String login) throws SQLException {
         return inspectorDAO.findByLogin(login);
     }
 
     @Override
-    public List<Inspector> findAll() {
+    public List<Inspector> findAll() throws SQLException {
         return inspectorDAO.findAll();
     }
 
     @Override
-    public boolean save(Inspector inspector) {
+    public boolean save(Inspector inspector) throws SQLException {
         return inspectorDAO.save(inspector);
     }
 
     @Override
-    public Inspector findById(int id) {
+    public Inspector findById(int id) throws SQLException {
         return inspectorDAO.findById(id);
     }
 }

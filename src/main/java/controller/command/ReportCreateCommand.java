@@ -6,13 +6,14 @@ import model.entity.Report;
 import model.entity.ReportActivities;
 import model.entity.Client;
 import service.ReportService;
-import service.factory.ServiceFactoryImpl;
+import service.impl.ServiceFactoryImpl;
 import util.InspectorSelectStrategy;
 import util.RandomSelectStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ReportCreateCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
         selectStrategy = new RandomSelectStrategy(new ServiceFactoryImpl());
 
         String firstName = request.getParameter("firstName");

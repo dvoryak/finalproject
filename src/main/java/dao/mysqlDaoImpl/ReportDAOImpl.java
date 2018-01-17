@@ -4,17 +4,26 @@ import dao.ReportDAO;
 import dao.pool.ConnectionPool;
 import model.entity.Report;
 import model.entity.ReportActivities;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.*;
+
+/**
+ * MySQL implementation of @{@link ReportDAO}
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
 
 public class ReportDAOImpl implements ReportDAO {
 
     private ConnectionPool pool = ConnectionPool.INSTANCE;
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
+    private final static Logger logger = Logger.getLogger(ReportDAOImpl.class);
 
     @Override
-    public boolean save(Report report) {
+    public boolean save(Report report) throws SQLException {
         try(Connection connection = pool.getConnection();
             PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.save"))) {
             connection.setAutoCommit(false);
@@ -45,15 +54,14 @@ public class ReportDAOImpl implements ReportDAO {
             return true;
 
         } catch (SQLException e) {
-            e.printStackTrace();
-
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return false;
     }
 
     @Override
-    public List<Report> findAll() {
+    public List<Report> findAll() throws SQLException {
         List<Report> reports = new ArrayList<>();
         try(Connection connection = pool.getConnection();
             Statement statement = connection.createStatement()) {
@@ -66,15 +74,14 @@ public class ReportDAOImpl implements ReportDAO {
             return reports;
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return null;
     }
 
     @Override
-    public List<Report> findByUserId(int id) {
+    public List<Report> findByUserId(int id) throws SQLException {
         List<Report> reports = new ArrayList<>();
         try(Connection connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findByUser"))) {
@@ -88,15 +95,14 @@ public class ReportDAOImpl implements ReportDAO {
             return reports;
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
-        return null;
     }
 
     @Override
-    public Report findById(int id) {
+    public Report findById(int id) throws SQLException {
         try(Connection connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findById"))) {
             statement.setInt(1,id);
@@ -107,15 +113,15 @@ public class ReportDAOImpl implements ReportDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
 
         return null;
     }
 
     @Override
-    public List<Report> findByInspectorId(int id) {
+    public List<Report> findByInspectorId(int id) throws SQLException {
         List<Report> reports = new ArrayList<>();
         try(Connection connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findByInspector"))) {
@@ -129,15 +135,13 @@ public class ReportDAOImpl implements ReportDAO {
             return reports;
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO logger
+            logger.error("Database error (dao level): " + e);
+            throw e;
         }
-
-        return null;
     }
 
     @Override
-    public boolean update(Report report) {
+    public boolean update(Report report) throws SQLException {
         try(Connection connection = pool.getConnection();
             PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.update"))) {
             connection.setAutoCommit(false);
@@ -160,11 +164,12 @@ public class ReportDAOImpl implements ReportDAO {
                     .update(connection,report.getActivities().toArray(new ReportActivities[]{}));
 
             connection.commit();
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Database error (dao level): " + e);
+            throw e;
 
         }
-        return false;
     }
 
     private Report getEntity(ResultSet rs) throws SQLException {

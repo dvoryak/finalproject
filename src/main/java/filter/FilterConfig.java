@@ -4,6 +4,12 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+/**
+ * Config Filter
+ *
+ * @author paveldvoryak
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = "/",
         filterName = "FilterConfig")
 public class FilterConfig implements Filter {
