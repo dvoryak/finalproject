@@ -1,11 +1,13 @@
 package service.impl;
 
 import dao.mysqlDaoImpl.MysqlDaoFactory;
+import dao.pool.ConnectionPool;
 import service.InspectorService;
 import service.ReportService;
 import service.ClientService;
 import service.UserRequestService;
 import service.ServiceFactory;
+import service.transaction.TransactionManagerImpl;
 
 
 public class ServiceFactoryImpl extends ServiceFactory {
@@ -22,7 +24,7 @@ public class ServiceFactoryImpl extends ServiceFactory {
 
     @Override
     public ReportService createReportService() {
-        return new ReportServiceImpl(new MysqlDaoFactory().createReportDAO());
+        return new ReportServiceImpl(new MysqlDaoFactory(), new TransactionManagerImpl(ConnectionPool.INSTANCE));
     }
 
     @Override

@@ -28,4 +28,14 @@ public class MysqlDaoFactory extends DAOFactory {
     public UserRequestDAO createUserRequestDAO() {
         return new UserRequestDAOImpl();
     }
+
+    @Override
+    public ReportPayerDAO createReportPayerDAO() {
+        return new ReportPayerDAOImpl();
+    }
+
+    @Override
+    public ReportActivitiesDAO createReportActivitiesDAO() {
+        return new ReportActivitiesDAOImpl();
+    }
 }

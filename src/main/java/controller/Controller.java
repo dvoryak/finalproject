@@ -47,6 +47,7 @@ public class Controller extends HttpServlet {
             logger.warn(e);
             e.printStackTrace();
         } catch (Exception e) {
+            e.printStackTrace();
             req.getRequestDispatcher(new PageError().execute(req,resp)).forward(req,resp);
         }
 

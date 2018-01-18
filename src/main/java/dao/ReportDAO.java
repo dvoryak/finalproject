@@ -2,6 +2,7 @@ package dao;
 
 import model.entity.Report;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,19 +18,21 @@ public interface ReportDAO {
      * Update a report
      *
      * @param report - {@link Report}
+     * @param connection - {@link Connection}
      * @return TRUE if operation was successful otherwise FALSE
      * @throws SQLException
      */
-    boolean update(Report report) throws SQLException;
+    boolean update(Report report, Connection connection) throws SQLException;
 
     /**
      * Save a report
      *
      * @param report - {@link Report}
+     * @param connection - {@link Connection}
      * @return TRUE if operation was successful otherwise FALSE
      * @throws SQLException
      */
-    boolean save(Report report) throws SQLException;
+    boolean save(Report report, Connection connection) throws SQLException;
 
     /**
      * Find all reports

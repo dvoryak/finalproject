@@ -29,5 +29,18 @@ public abstract class DAOFactory {
      */
     public abstract UserRequestDAO createUserRequestDAO();
 
+    /**
+     * Create ReportPayerDAO
+     * @return {@link ReportPayerDAO}
+     */
+    public abstract ReportPayerDAO createReportPayerDAO();
+
+    /**
+     * Create ReportActivitiesDAO
+     * @return {@link ReportActivitiesDAO}
+     */
+    public abstract ReportActivitiesDAO createReportActivitiesDAO();
+
+
 
 }

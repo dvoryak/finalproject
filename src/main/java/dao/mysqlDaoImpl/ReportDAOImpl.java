@@ -22,37 +22,38 @@ public class ReportDAOImpl implements ReportDAO {
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private final static Logger logger = Logger.getLogger(ReportDAOImpl.class);
 
+
     @Override
-    public boolean save(Report report) throws SQLException {
-        try(Connection connection = pool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.save"))) {
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+    public boolean update(Report report, Connection connection) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.update"))) {
 
+            ps.setString(1, report.getInstitute());
+            ps.setInt(2, report.getEmployeeNumber());
+            ps.setDate(3, report.getDate());
+            ps.setString(4, report.getMessage());
+            ps.setInt(5, report.getStatus().getId());
+            ps.setInt(6, report.getId());
+            return ps.execute();
 
-            new ReportPayerDAOImpl()
-                    .save(report.getPayer(),connection);
+        } catch (SQLException e) {
+            logger.error("Database error (dao level): " + e);
+            throw e;
+        }
+    }
 
-            ps.setInt(1,report.getId());
-            ps.setString(2,report.getInstitute());
-            ps.setInt(3,report.getEmployeeNumber());
-            ps.setDate(4,report.getDate());
-            ps.setString(5,report.getMessage());
-            ps.setInt(6,report.getStatus().getId());
-            ps.setInt(7,report.getPayer().getId());
-            ps.setInt(8,report.getClient().getId());
-            ps.setInt(9,report.getInspector().getId());
-            ps.execute();
-            ps.close();
-
-            List<ReportActivities> activities = report.getActivities();
-
-            new ReportActivitiesDAOImpl().save(connection,activities.toArray(new ReportActivities[]{}));
-
-            connection.commit();
-
-            return true;
-
+    @Override
+    public boolean save(Report report, Connection connection) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.save"))) {
+            ps.setInt(1, report.getId());
+            ps.setString(2, report.getInstitute());
+            ps.setInt(3, report.getEmployeeNumber());
+            ps.setDate(4, report.getDate());
+            ps.setString(5, report.getMessage());
+            ps.setInt(6, report.getStatus().getId());
+            ps.setInt(7, report.getPayer().getId());
+            ps.setInt(8, report.getClient().getId());
+            ps.setInt(9, report.getInspector().getId());
+            return ps.execute();
         } catch (SQLException e) {
             logger.error("Database error (dao level): " + e);
             throw e;
@@ -63,11 +64,11 @@ public class ReportDAOImpl implements ReportDAO {
     @Override
     public List<Report> findAll() throws SQLException {
         List<Report> reports = new ArrayList<>();
-        try(Connection connection = pool.getConnection();
-            Statement statement = connection.createStatement()) {
+        try (Connection connection = pool.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(bundle.getString("sql.report.findAll"));
 
-            while(rs.next()) {
+            while (rs.next()) {
                 reports.add(getEntity(rs));
             }
 
@@ -83,12 +84,12 @@ public class ReportDAOImpl implements ReportDAO {
     @Override
     public List<Report> findByUserId(int id) throws SQLException {
         List<Report> reports = new ArrayList<>();
-        try(Connection connection = pool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findByUser"))) {
-            statement.setInt(1,id);
+        try (Connection connection = pool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findByUser"))) {
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 reports.add(getEntity(rs));
             }
 
@@ -103,12 +104,12 @@ public class ReportDAOImpl implements ReportDAO {
 
     @Override
     public Report findById(int id) throws SQLException {
-        try(Connection connection = pool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findById"))) {
-            statement.setInt(1,id);
+        try (Connection connection = pool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findById"))) {
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 return getEntity(rs);
             }
 
@@ -123,12 +124,12 @@ public class ReportDAOImpl implements ReportDAO {
     @Override
     public List<Report> findByInspectorId(int id) throws SQLException {
         List<Report> reports = new ArrayList<>();
-        try(Connection connection = pool.getConnection();
-            PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findByInspector"))) {
-            statement.setInt(1,id);
+        try (Connection connection = pool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(bundle.getString("sql.report.findByInspector"))) {
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 reports.add(getEntity(rs));
             }
 
@@ -137,38 +138,6 @@ public class ReportDAOImpl implements ReportDAO {
         } catch (SQLException e) {
             logger.error("Database error (dao level): " + e);
             throw e;
-        }
-    }
-
-    @Override
-    public boolean update(Report report) throws SQLException {
-        try(Connection connection = pool.getConnection();
-            PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.update"))) {
-            connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-
-
-            ps.setString(1,report.getInstitute());
-            ps.setInt(2,report.getEmployeeNumber());
-            ps.setDate(3,report.getDate());
-            ps.setString(4,report.getMessage());
-            ps.setInt(5,report.getStatus().getId());
-            ps.setInt(6,report.getId());
-            ps.execute();
-            ps.close();
-
-            new ReportPayerDAOImpl()
-             .update(report.getPayer(),connection);
-
-            new ReportActivitiesDAOImpl()
-                    .update(connection,report.getActivities().toArray(new ReportActivities[]{}));
-
-            connection.commit();
-            return true;
-        } catch (SQLException e) {
-            logger.error("Database error (dao level): " + e);
-            throw e;
-
         }
     }
 
