@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class ReportPayerDAOImpl implements ReportPayerDAO {
 
-    private ConnectionPool pool = ConnectionPool.INSTANCE;
+    private ConnectionPool pool = ConnectionPool.getInstance();
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private final Logger logger = Logger.getLogger(ReportDAOImpl.class);
 

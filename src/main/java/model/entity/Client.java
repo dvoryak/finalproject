@@ -17,8 +17,6 @@ public class Client extends User {
     private String phone;
     private String email;
 
-    private List<UserRequest> requests;
-
     {
         setRole("Client");
     }
@@ -40,18 +38,15 @@ public class Client extends User {
      * @param lastName - lastName
      * @param phone - phone
      * @param email - email
-     * @param requests - requests
      *
      * @see Client#Client(int, String, String, String, String, String, String, List)
      */
-    public Client(int id, String login, String password, String firstName, String lastName, String phone, String email,
-                  List<UserRequest> requests) {
+    public Client(int id, String login, String password, String firstName, String lastName, String phone, String email) {
         super(id, login, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.requests = requests;
     }
 
     private Client(Builder builder) {
@@ -62,7 +57,6 @@ public class Client extends User {
         this.lastName = builder.lastName;
         this.phone = builder.phone;
         this.email = builder.email;
-        this.requests = builder.requests;
     }
 
     public String getFirstName() {
@@ -97,14 +91,6 @@ public class Client extends User {
         this.email = email;
     }
 
-    public List<UserRequest> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(List<UserRequest> requests) {
-        this.requests = requests;
-    }
-
     /**
      * Implementation of builder's template for Client
      *
@@ -118,8 +104,6 @@ public class Client extends User {
         private String password;
         private String email;
         private String phone;
-        private List<UserRequest> requests;
-
 
         public Builder() {
 
@@ -160,11 +144,6 @@ public class Client extends User {
             return this;
         }
 
-        public Builder request(List<UserRequest> reports) {
-            this.requests = requests;
-            return this;
-        }
-
         public Client build() {
             return new Client(this);
         }
@@ -177,7 +156,6 @@ public class Client extends User {
         result = 31 * result + lastName.hashCode();
         result = 31 * result + phone.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + (requests != null ? requests.hashCode() : 0);
         return result;
     }
 
@@ -188,7 +166,6 @@ public class Client extends User {
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", requests=" + requests +
                 '}';
     }
 }

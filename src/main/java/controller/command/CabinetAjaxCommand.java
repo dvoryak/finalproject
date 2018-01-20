@@ -26,7 +26,7 @@ public class CabinetAjaxCommand implements Command {
 
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
         if(user.getRole().equals("Inspector")) {
             reports = reportService.findByInspectorId(user.getId());
@@ -55,7 +55,9 @@ public class CabinetAjaxCommand implements Command {
                 response.getWriter().append(resp);
             } catch (IOException e) {
                 e.printStackTrace();
+                throw e;
             }
+
         }
 
         return null;

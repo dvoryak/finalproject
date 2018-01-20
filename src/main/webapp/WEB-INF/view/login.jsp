@@ -1,6 +1,12 @@
 <%@include file="components/_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
+<%@taglib prefix="ctg" uri="customtags" %>
+
+<div style="text-align: right">
+    <ctg:custom-tag/>
+</div>
+
 
 <div class="container-fluid">
     <div class="row">

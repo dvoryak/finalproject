@@ -28,12 +28,11 @@ public class LoginCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        ClientService clientService = serviceFactory.createClientService();
-        InspectorService inspectorService = serviceFactory.createInspectorService();
 
         String isInspector = request.getParameter("isInspector");
 
         if(isInspector != null) {
+            InspectorService inspectorService = serviceFactory.createInspectorService();
             Inspector inspector = inspectorService.findByLogin(login);
             if(checkUser(inspector,login,password)) {
                 request.getSession().setAttribute("user",inspector);
@@ -41,6 +40,7 @@ public class LoginCommand implements Command {
             }
 
         } else {
+            ClientService clientService = serviceFactory.createClientService();
             Client client = clientService.findByLogin(login);
             if(checkUser(client,login,password)) {
                 request.getSession().setAttribute("user", client);

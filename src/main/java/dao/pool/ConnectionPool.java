@@ -8,23 +8,37 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static java.lang.Thread.sleep;
+
 /**
- *
  * @author paveldvoryak
  * @version 1.0
  */
-public enum ConnectionPool {
-    INSTANCE;
+public class ConnectionPool {
 
     private final static Logger logger = Logger.getLogger(ConnectionPool.class);
+    private static ConnectionPool pool;
+
+    private ConnectionPool() {
+    }
+
+    public static ConnectionPool getInstance() {
+        if (pool == null) {
+            pool = new ConnectionPool();
+        }
+
+        return pool;
+    }
+
 
     private DataSource dataSource;
+
     {
         try {
             InitialContext initialContext = new InitialContext();
             dataSource = (DataSource) initialContext.lookup("java:comp/env/jdbc/project");
         } catch (NamingException e) {
-            e.printStackTrace();
+            logger.error("Getting context error " + e);
         }
     }
 

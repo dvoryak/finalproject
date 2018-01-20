@@ -33,17 +33,4 @@ public class ChangeLanguageCommand implements Command {
         return null;
     }
 
-    private String getUrl(String pageName) {
-        try {
-            if (!pageName.isEmpty()) {
-                Field declaredField = Pages.class.getDeclaredField(pageName.toUpperCase());
-                return (String) declaredField.get(null);
-            }
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
 }

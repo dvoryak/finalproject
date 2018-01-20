@@ -21,13 +21,13 @@ public class ClientDAOImpl implements ClientDAO {
 
     private static final Logger logger = Logger.getLogger(ClientDAOImpl.class);
 
-    private ConnectionPool pool = ConnectionPool.INSTANCE;
+    private ConnectionPool pool;
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
 
 
-    public ClientDAOImpl() {
+    public ClientDAOImpl(ConnectionPool pool) {
+        this.pool = pool;
     }
-
 
     @Override
     public Client findByLogin(String login) throws SQLException {
@@ -111,5 +111,9 @@ public class ClientDAOImpl implements ClientDAO {
                 .email(rs.getString("email"))
                 .phone(rs.getString("phone"))
                 .build();
+    }
+
+    public void setPool(ConnectionPool pool) {
+        this.pool = pool;
     }
 }

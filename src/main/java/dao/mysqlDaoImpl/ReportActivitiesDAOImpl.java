@@ -17,7 +17,7 @@ import java.util.*;
 
 public class ReportActivitiesDAOImpl implements ReportActivitiesDAO {
 
-    private ConnectionPool pool = ConnectionPool.INSTANCE;
+    private ConnectionPool pool = ConnectionPool.getInstance();
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private Logger logger = Logger.getLogger(ReportActivitiesDAOImpl.class);
 

@@ -1,6 +1,6 @@
 package controller.command;
 
-public enum Type {
+public enum CommandType {
     LOGIN_PAGE,
     REGISTER_PAGE,
     REPORT_PAGE,

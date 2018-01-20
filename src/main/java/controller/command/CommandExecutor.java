@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-import static controller.command.Type.*;
+import static controller.command.CommandType.*;
 
 /**
  *
@@ -19,7 +19,7 @@ import static controller.command.Type.*;
 public enum CommandExecutor {
     INSTANCE;
 
-    private Map<Type,Command> commandMap = new HashMap<>();
+    private Map<CommandType,Command> commandMap = new HashMap<>();
     {
         commandMap.put(LANGUAGE_CHANGE,new ChangeLanguageCommand());
         commandMap.put(REGISTER_PAGE,new PageRegisterCommand());
@@ -54,6 +54,6 @@ public enum CommandExecutor {
         }
 
         if(command == null) return Pages.LOGIN;
-        return commandMap.get(Type.valueOf(command.toUpperCase())).execute(request, response);
+        return commandMap.get(CommandType.valueOf(command.toUpperCase())).execute(request, response);
     }
 }

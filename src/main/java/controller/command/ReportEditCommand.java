@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,19 +25,9 @@ public class ReportEditCommand implements Command {
 
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Report rep = (Report) request.getSession().getAttribute("report");
 
-
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String middleName = request.getParameter("middleName");
-        String phone = request.getParameter("phone");
-        String passport = request.getParameter("passport");
-        String city = request.getParameter("city");
-        String street = request.getParameter("street");
-        String home = request.getParameter("home");
-        String postal = request.getParameter("postal");
 
         String[] names = request.getParameterValues("name");
         String[] texts = request.getParameterValues("text");
@@ -73,8 +65,16 @@ public class ReportEditCommand implements Command {
         if(employeeNumber != null && !employeeNumber.isEmpty())
              rep.setEmployeeNumber(Integer.parseInt(employeeNumber));
         String date = request.getParameter("date");
-        if(date != null && !date.isEmpty())
-            rep.setDate(Date.valueOf(request.getParameter("date")));
+        if(date != null && !date.isEmpty()) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                java.util.Date parse = format.parse(date);
+                java.sql.Date sql = new java.sql.Date(parse.getTime());
+                rep.setDate(sql);
+            } catch (ParseException e) {
+                throw e;
+            }
+        }
 
         reportService.update(rep);
         return Pages.CLIENT_CABINET;

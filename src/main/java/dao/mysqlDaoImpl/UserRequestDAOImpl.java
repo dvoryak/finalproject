@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class UserRequestDAOImpl implements UserRequestDAO {
 
-    private ConnectionPool pool = ConnectionPool.INSTANCE;
+    private ConnectionPool pool = ConnectionPool.getInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private static final Logger logger = Logger.getLogger(UserRequestDAOImpl.class);
 

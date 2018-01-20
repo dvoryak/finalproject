@@ -5,6 +5,7 @@ import dao.mysqlDaoImpl.ClientDAOImpl;
 import dao.mysqlDaoImpl.InspectorDAOImpl;
 import dao.mysqlDaoImpl.ReportDAOImpl;
 import dao.mysqlDaoImpl.UserRequestDAOImpl;
+import dao.pool.ConnectionPool;
 
 
 public class MysqlDaoFactory extends DAOFactory {
@@ -16,7 +17,7 @@ public class MysqlDaoFactory extends DAOFactory {
 
     @Override
     public ClientDAO createClientDAO() {
-        return new ClientDAOImpl();
+        return new ClientDAOImpl(ConnectionPool.getInstance());
     }
 
     @Override

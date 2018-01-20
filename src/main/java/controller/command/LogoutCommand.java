@@ -13,6 +13,6 @@ public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().invalidate();
-        return Pages.LOGIN.toString();
+        return Pages.LOGIN;
     }
 }

@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 public class InspectorDAOImpl implements InspectorDAO {
 
     private final static Logger logger = Logger.getLogger(InspectorDAOImpl.class);
-    private ConnectionPool pool = ConnectionPool.INSTANCE;
+    private ConnectionPool pool = ConnectionPool.getInstance();
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
 
     public InspectorDAOImpl() {

@@ -2,7 +2,6 @@ package model.entity;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class that extends a @{@link Entity} and represents Report

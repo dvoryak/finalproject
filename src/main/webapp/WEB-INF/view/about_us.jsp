@@ -1,6 +1,10 @@
 <%@page pageEncoding="UTF-8" %>
 <%@include file="components/_header.jsp" %>
+<%@taglib prefix="ctg" uri="customtags" %>
 
+<div style="text-align: right">
+    <ctg:custom-tag/>
+</div>
 
 <div class="text-tz-wrapper container">
     <p> Система Подачи Отчетов в Налоговую. Физ./Юр.лицо (далее

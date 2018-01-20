@@ -1,6 +1,6 @@
 package filter;
 
-import controller.command.Type;
+import controller.command.CommandType;
 import model.entity.User;
 
 import javax.servlet.*;
@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-import static controller.command.Type.*;
+import static controller.command.CommandType.*;
 
 /**
  * @author paveldvoryak
@@ -33,7 +33,7 @@ public class AuthFilter implements Filter {
 
         try {
             if (command != null && !command.isEmpty()) {
-                switch (Type.valueOf(command.toUpperCase())) {
+                switch (CommandType.valueOf(command.toUpperCase())) {
                     case LOGIN_PAGE:
                     case REGISTER_PAGE:
                         if (user != null) {
@@ -44,11 +44,8 @@ public class AuthFilter implements Filter {
                         }
                         break;
                     case ABOUT_US:
-                        break;
                     case LANGUAGE_CHANGE:
-                        break;
                     case LOGIN:
-                        break;
                     case REGISTER:
                         break;
 

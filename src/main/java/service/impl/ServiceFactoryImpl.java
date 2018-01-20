@@ -24,7 +24,7 @@ public class ServiceFactoryImpl extends ServiceFactory {
 
     @Override
     public ReportService createReportService() {
-        return new ReportServiceImpl(new MysqlDaoFactory(), new TransactionManagerImpl(ConnectionPool.INSTANCE));
+        return new ReportServiceImpl(new MysqlDaoFactory(), new TransactionManagerImpl(ConnectionPool.getInstance()));
     }
 
     @Override

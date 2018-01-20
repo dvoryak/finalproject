@@ -1,5 +1,6 @@
 <%@include file="components/_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 
 <div class="list">
     <div class="container">
@@ -34,12 +35,14 @@
                 $(".empty-list").css("visibility","hidden");
             }
             for (var i = 0; i < data.length; i++) {
+                var date = new Date();
+                date.setTime(Date.parse(data[i].date));
                 $(".list").css("visibility","visible");
                 $("#table")
                     .append('<tr class="el"> <td>' + (i + 1)+ ' </td>' +
                         '<td>' + data[i].id + '</td>' +
                         '<td>' + data[i].payer.firstName + ' ' + data[i].payer.lastName + '</td>' +
-                        '<td>' + data[i].date + '</td>' +
+                        '<td>'  + date.toLocaleDateString()  + '</td>' +
                         '<td>' + data[i].institute + '</td>' +
                         '<td><a href="/?command=edit_page&id=' + data[i].id +'"> <fmt:message key='front.edit' bundle='${bundle}'/> </a></td>' +
                         '<td><a href="/?command=view_page&id=' + data[i].id +'"> <fmt:message key='front.view' bundle='${bundle}'/> </a></td>' +

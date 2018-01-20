@@ -7,6 +7,7 @@ import model.entity.ReportActivities;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 /**
@@ -18,7 +19,7 @@ import java.util.*;
 
 public class ReportDAOImpl implements ReportDAO {
 
-    private ConnectionPool pool = ConnectionPool.INSTANCE;
+    private ConnectionPool pool = ConnectionPool.getInstance();
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private final static Logger logger = Logger.getLogger(ReportDAOImpl.class);
 
@@ -29,6 +30,7 @@ public class ReportDAOImpl implements ReportDAO {
 
             ps.setString(1, report.getInstitute());
             ps.setInt(2, report.getEmployeeNumber());
+            report.getDate().setTime(report.getDate().getTime() + 86400000);
             ps.setDate(3, report.getDate());
             ps.setString(4, report.getMessage());
             ps.setInt(5, report.getStatus().getId());
@@ -149,7 +151,7 @@ public class ReportDAOImpl implements ReportDAO {
                 .date(rs.getDate("data"))
                 .message(rs.getString("message"))
                 .status(Report.Status.values()[rs.getInt("statusId") - 1])
-                .client(new ClientDAOImpl().findById(rs.getInt("userId")))
+                .client(new ClientDAOImpl(pool).findById(rs.getInt("userId")))
                 .payer(new ReportPayerDAOImpl().findById(rs.getInt("payerId")))
                 .inspector(new InspectorDAOImpl().findById(rs.getInt("inspector_id")))
                 .activities(new ReportActivitiesDAOImpl().findByReportId(rs.getInt("id")))
