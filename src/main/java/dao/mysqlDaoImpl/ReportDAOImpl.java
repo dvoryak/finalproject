@@ -49,6 +49,7 @@ public class ReportDAOImpl implements ReportDAO {
             ps.setInt(1, report.getId());
             ps.setString(2, report.getInstitute());
             ps.setInt(3, report.getEmployeeNumber());
+            report.getDate().setTime(report.getDate().getTime() + 86400000);
             ps.setDate(4, report.getDate());
             ps.setString(5, report.getMessage());
             ps.setInt(6, report.getStatus().getId());

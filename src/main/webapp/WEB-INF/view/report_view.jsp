@@ -13,9 +13,9 @@
         <br>
         <span> <fmt:message key="client.phone" bundle="${bundle}"/> : ${sessionScope.report.payer.phone}</span>
         <br>
-        <span>  <fmt:message key="payer.city" bundle="${bundle}"/> : : ${sessionScope.report.payer.city}  </span>
+        <span>  <fmt:message key="payer.city" bundle="${bundle}"/> : ${sessionScope.report.payer.city}  </span>
         <br>
-        <span>  <fmt:message key="payer.street" bundle="${bundle}"/> : : ${sessionScope.report.payer.street}  </span>
+        <span>  <fmt:message key="payer.street" bundle="${bundle}"/> : ${sessionScope.report.payer.street}  </span>
         <br>
         <span><fmt:message key="payer.home" bundle="${bundle}"/> : ${sessionScope.report.payer.home}</span>
         <br>

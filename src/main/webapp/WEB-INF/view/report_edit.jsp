@@ -2,12 +2,12 @@
 <%@include file="components/_header.jsp" %>
 
 <div class="container">
-    <form action="/" method="post">
-        <input type="hidden" name="command" value="report_edit">
-        <c:set var="report" scope="request" value="${report}"/>
-        <div class="edit-wrap">
-        <span><fmt:message key="payer.firstName" bundle="${bundle}"/>  :
-            <input name="firstName" type="text" placeholder="${sessionScope.report.payer.firstName}"/>  </span>
+    <div class="edit-wrap">
+        <form action="/" method="post">
+            <input type="hidden" name="command" value="report_edit">
+            <c:set var="report" scope="request" value="${report}"/>
+            <span><fmt:message key="payer.firstName" bundle="${bundle}"/>  :
+            <input name="firstName" type="text"  placeholder="${sessionScope.report.payer.firstName}"/>  </span>
             <br>
             <span> <fmt:message key="payer.lastName" bundle="${bundle}"/>  :
         <input name="lastName" type="text" placeholder="${sessionScope.report.payer.lastName}"/></span>
@@ -37,7 +37,7 @@
         <input name="employeeNumber" type="text" placeholder="${sessionScope.report.employeeNumber}"/> </span>
             <br>
             <span><fmt:message key="report.institute" bundle="${bundle}"/> :
-        <input name="institute" type="text" placeholder="${sessionScope.report.institute} "/></span>
+        <input name="institute" type="text" placeholder="${sessionScope.report.institute}" size="30"/></span>
             <br>
             <span> <fmt:message key="front.activities" bundle="${bundle}"/> : </span>
             <br>
@@ -53,8 +53,8 @@
 
             <input type="hidden" name="id" value="${param.id}">
             <button type="submit" class="btn btn-success"><fmt:message key="front.done" bundle="${bundle}"/></button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 </br>
