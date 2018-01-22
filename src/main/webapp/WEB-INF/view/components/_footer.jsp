@@ -24,14 +24,14 @@
 <div class="container">
     <div class="navbar navbar-default navbar-fixed-bottom">
         <ul class="my-footer">
-            <li><a href="/${page}?command=LANGUAGE_CHANGE&lang=en&page=${page}" > English </a></li>
-            <li><a href="/${page}?command=LANGUAGE_CHANGE&lang=ua&page=${page}" > Українська </a></li>
-            <li><a href="/${page}?command=LANGUAGE_CHANGE&lang=ru&page=${page}" > Русский </a></li>
+            <li><a href="/?command=LANGUAGE_CHANGE&lang=en" > English </a></li>
+            <li><a href="/?command=LANGUAGE_CHANGE&lang=ua" > Українська </a></li>
+            <li><a href="/?command=LANGUAGE_CHANGE&lang=ru" > Русский </a></li>
         </ul>
     </div>
 </div>
 
-<c:set var="lang" value="${cookie.lang.value}" scope="session"/>
-<fmt:setLocale value="${empty sessionScope.lang ? 'en' : sessionScope.lang}"/>
+<c:set var="langf" value="${cookie.lang.value}" scope="session"/>
+<fmt:setLocale value="${empty sessionScope.langf ? 'en' : sessionScope.langf}"/>
 <fmt:setBundle basename="/i18n/message" var="bundle" scope="session"/>
 </body>

@@ -25,7 +25,7 @@
         <br>
         <span><fmt:message key="report.institute" bundle="${bundle}"/> : ${sessionScope.report.institute}</span>
         <br>
-        <span> Activities : </span>
+        <span><fmt:message key="front.activities" bundle="${bundle}"/>  </span>
         <br>
         <c:forEach items="${sessionScope.report.activities}" var="item">
             <span><fmt:message key="acivities.name" bundle="${bundle}"/> : ${item.name} </span>
@@ -34,7 +34,7 @@
             <br>
         </c:forEach>
         <br>
-        <span>Message : ${sessionScope.report.message}</span>
+        <span><fmt:message key="front.message" bundle="${bundle}"/> : ${sessionScope.report.message}</span>
         <br>
     </div>
 </div>

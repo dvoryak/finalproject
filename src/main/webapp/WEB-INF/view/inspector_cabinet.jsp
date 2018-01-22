@@ -36,14 +36,17 @@
             } else {
                 $(".empty-list").css("visibility","hidden");
             }
+
             for (var i = 0; i < data.length; i++) {
+                var date = new Date();
+                date.setTime(Date.parse(data[i].date));
                 $(".list").css("visibility","visible");
                 $("#table")
                     .append('<tr class="el"> <td>' + (i + 1) + ' </td>' +
                         '<td>' + data[i].id + '</td>' +
                         '<td>' + data[i].client.firstName + ' ' + data[i].client.lastName + '</td>' +
                         '<td>' + data[i].payer.firstName + ' ' + data[i].payer.lastName + '</td>' +
-                        '<td>' + data[i].date + '</td>' +
+                        '<td>' + date.toLocaleDateString() + '</td>' +
                         '<td>' + data[i].institute + '</td>' +
                         '<td><a href="/?command=check_page&id=' + data[i].id +'"> <fmt:message key="front.check" bundle="${bundle}"/> </a></td>' +
                         '</tr>')

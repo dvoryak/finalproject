@@ -6,7 +6,6 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class CurrentData extends TagSupport {
@@ -15,7 +14,7 @@ public class CurrentData extends TagSupport {
         String lang = (String) pageContext.getSession().getAttribute("lang");
         String date;
 
-        if(lang.equals("ua") || lang.equals("ru")) {
+        if(lang != null && (lang.equals("ua") || lang.equals("ru"))) {
             DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT,Locale.forLanguageTag("ru"));
             date = "Дата : " + df.format(new Date());
         } else {

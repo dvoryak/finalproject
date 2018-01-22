@@ -24,6 +24,13 @@ public class ReportDAOImpl implements ReportDAO {
     private final static Logger logger = Logger.getLogger(ReportDAOImpl.class);
 
 
+    public ReportDAOImpl() {
+    }
+
+    public ReportDAOImpl(ConnectionPool pool) {
+        this.pool = pool;
+    }
+
     @Override
     public boolean update(Report report, Connection connection) throws SQLException {
         try (PreparedStatement ps = connection.prepareStatement(bundle.getString("sql.report.update"))) {

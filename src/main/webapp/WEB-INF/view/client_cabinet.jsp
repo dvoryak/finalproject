@@ -1,6 +1,6 @@
 <%@include file="components/_header.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ taglib prefix="ctg" uri="customtags" %>
+<%@taglib prefix="ctg" uri="customtags" %>
 
 <div class="list">
     <div class="container">
@@ -27,6 +27,7 @@
     function getList(name) {
         $.get('/?command=ajax', {status: name}, function (data) {
             $('td').remove();
+
             var data = $.parseJSON(data);
             if(data.length == 0) {
                 $(".list").css("visibility","hidden");
@@ -34,6 +35,7 @@
             } else {
                 $(".empty-list").css("visibility","hidden");
             }
+
             for (var i = 0; i < data.length; i++) {
                 var date = new Date();
                 date.setTime(Date.parse(data[i].date));

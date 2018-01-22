@@ -7,8 +7,8 @@ import model.entity.ReportActivities;
 import model.entity.Client;
 import service.ReportService;
 import service.impl.ServiceFactoryImpl;
-import util.InspectorSelectStrategy;
-import util.RandomSelectStrategy;
+import util.strategy.InspectorSelectStrategy;
+import util.strategy.RandomSelectStrategy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +24,11 @@ public class ReportCreateCommand implements Command {
 
     public ReportCreateCommand(ReportService reportService) {
         this.reportService = reportService;
+    }
+
+    public ReportCreateCommand(ReportService reportService, InspectorSelectStrategy selectStrategy) {
+        this.reportService = reportService;
+        this.selectStrategy = selectStrategy;
     }
 
     @Override
@@ -53,8 +58,6 @@ public class ReportCreateCommand implements Command {
                 .home(home)
                 .build();
         reportPayer.setId(reportPayer.hashCode());
-
-
 
 
         String institute = request.getParameter("institute");

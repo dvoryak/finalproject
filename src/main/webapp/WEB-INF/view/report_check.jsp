@@ -28,7 +28,7 @@
         <br>
         <span><fmt:message key="report.institute" bundle="${bundle}"/> : ${sessionScope.report.institute}</span>
         <br>
-        <span> Activities : </span>
+        <span> <fmt:message key="front.activities" bundle="${bundle}"/>  </span>
         <br>
         <c:forEach items="${sessionScope.report.activities}" var="item">
             <span><fmt:message key="acivities.name" bundle="${bundle}"/> : ${item.name} </span>
@@ -47,8 +47,8 @@
         <br>
         <input type="hidden" name="id" value="${param.id}">
         <input type="hidden" name="command" value="report_check">
-        <button class="btn btn-success" value="OK" type="submit" name="status"> Accept</button>
-        <button class="btn btn-danger" value="FAILED" type="submit" name="status"> Decline</button>
+        <button class="btn btn-success" value="OK" type="submit" name="status"> <fmt:message key="front.accept" bundle="${bundle}"/> </button>
+        <button class="btn btn-danger" value="FAILED" type="submit" name="status"> <fmt:message key="front.decline" bundle="${bundle}"/> </button>
     </div>
 </form>
 

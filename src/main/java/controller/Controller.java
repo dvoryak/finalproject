@@ -39,7 +39,7 @@ public class Controller extends HttpServlet {
         try {
             execute = executor.execute(req,resp);
             if(execute != null) {
-                logger.info("Before forward" + execute);
+                logger.info("Before forward to " + execute);
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher(execute);
                 requestDispatcher.forward(req, resp);
             }

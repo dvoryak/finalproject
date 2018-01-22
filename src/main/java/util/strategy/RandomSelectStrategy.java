@@ -1,8 +1,9 @@
-package util;
+package util.strategy;
 
 import model.entity.Inspector;
 import service.InspectorService;
 import service.ServiceFactory;
+import util.strategy.InspectorSelectStrategy;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,6 +26,10 @@ public class RandomSelectStrategy implements InspectorSelectStrategy {
         InspectorService inspectorService = serviceFactory.createInspectorService();
 
         List<Inspector> inspectors = inspectorService.findAll();
+
+        if(inspectors.size() == 0) {
+            throw new RuntimeException();
+        }
 
         int size = inspectors.size();
 

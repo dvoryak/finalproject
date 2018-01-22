@@ -26,6 +26,13 @@ public class UserRequestDAOImpl implements UserRequestDAO {
     private final ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private static final Logger logger = Logger.getLogger(UserRequestDAOImpl.class);
 
+    public UserRequestDAOImpl() {
+    }
+
+    public UserRequestDAOImpl(ConnectionPool pool) {
+        this.pool = pool;
+    }
+
     @Override
     public boolean save(UserRequest userRequest) throws SQLException {
 

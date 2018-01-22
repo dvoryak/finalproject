@@ -21,6 +21,13 @@ public class ReportActivitiesDAOImpl implements ReportActivitiesDAO {
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private Logger logger = Logger.getLogger(ReportActivitiesDAOImpl.class);
 
+    public ReportActivitiesDAOImpl() {
+    }
+
+    public ReportActivitiesDAOImpl(ConnectionPool pool) {
+        this.pool = pool;
+    }
+
     @Override
     public List<ReportActivities> findByReportId(int reportId) throws SQLException {
         try (Connection connection = pool.getConnection();

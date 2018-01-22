@@ -26,6 +26,10 @@ public class InspectorDAOImpl implements InspectorDAO {
     public InspectorDAOImpl() {
     }
 
+    public InspectorDAOImpl(ConnectionPool pool) {
+        this.pool = pool;
+    }
+
     @Override
     public Inspector findByLogin(String login) throws SQLException {
         try(Connection connection = pool.getConnection();

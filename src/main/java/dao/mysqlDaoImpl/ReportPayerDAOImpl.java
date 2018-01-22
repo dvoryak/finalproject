@@ -23,6 +23,13 @@ public class ReportPayerDAOImpl implements ReportPayerDAO {
     private ResourceBundle bundle = ResourceBundle.getBundle("queries/queries");
     private final Logger logger = Logger.getLogger(ReportDAOImpl.class);
 
+    public ReportPayerDAOImpl() {
+    }
+
+    public ReportPayerDAOImpl(ConnectionPool pool) {
+        this.pool = pool;
+    }
+
     @Override
     public ReportPayer findById(int id) throws SQLException {
         try(Connection connection = pool.getConnection();
