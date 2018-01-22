@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,29 +29,18 @@ public class CabinetAjaxCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
-        if(user.getRole().equals("Inspector")) {
+        if (user.getRole().equals("Inspector")) {
             reports = reportService.findByInspectorId(user.getId());
-        } else if(user.getRole().equals("Client")) {
+        } else if (user.getRole().equals("Client")) {
             reports = reportService.findByUserId(user.getId());
         }
         String name = request.getParameter("status");
         String resp = null;
-        if(name != null) {
-            switch (name) {
-                case "ok":
-                    resp = getJSON(reports.stream().filter(report -> report.getStatus() == Report.Status.OK).collect(Collectors.toList()));
-                    break;
-                case "failed":
-                    resp = getJSON(reports.stream().filter(report -> report.getStatus() == Report.Status.FAILED).collect(Collectors.toList()));
-                    break;
-                case "unchecked":
-                    resp = getJSON(reports.stream().filter(report -> report.getStatus() == Report.Status.UNCHECKED).collect(Collectors.toList()));
-                    break;
-                case "checked" :
-                    resp = getJSON(reports.stream().filter(report -> report.getStatus() != Report.Status.UNCHECKED).collect(Collectors.toList()));
-                    break;
-            }
-
+        if (name != null) {
+            resp = getJSON(reports.stream()
+                    .filter(report -> report.getStatus().equals(Report.Status.valueOf(name.toUpperCase())))
+                    .sorted(Comparator.comparingLong(o -> o.getDate().getTime()))
+                    .collect(Collectors.toList()));
             try {
                 response.getWriter().append(resp);
             } catch (IOException e) {
